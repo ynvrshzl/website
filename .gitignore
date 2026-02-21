@@ -12,6 +12,7 @@ node_modules/
 
 # Private local-only directories embedded in project
 database/src/
+database/main.js
 
 # Temporary media files, until CDN solution
 *.jpg
