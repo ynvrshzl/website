@@ -15,6 +15,7 @@ A high-performance, modular, <u>epic</u> component visualizes an interactive net
 - [Parts of the graph](docs/architecture/anatomy.md)
 - [Lifecycle](./docs/lifecycle.md)
 - [Versions](.docs/versions.md)
+- [Sandbox, Lab Notebook, Experiments](./sandbox/README.md)
 
 ###### Insight
 - [Complexity](./docs/complexity.md)
