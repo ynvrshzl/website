@@ -1,0 +1,1 @@
+The stack is the internal memory of the program

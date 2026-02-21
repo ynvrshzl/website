@@ -1,0 +1,104 @@
+table
+{
+    appearance: none;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* grid */
+:root {
+    --grid-min-width: 300px;
+    --grid-image-height: 100px;
+    --grid-padding: 20px;
+    --grid-margins: 2px;
+    --grid-cell-spacing: 10px;
+}
+
+table.grid tbody {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min-width), 1fr));
+    grid-column-gap: var(--grid-margins);
+    grid-row-gap: var(--grid-margins);
+
+}
+
+table.grid >tbody>tr {
+    transition: background-color .1s linear;
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    margin: var(--grid-margins);
+    padding: var(--grid-padding);
+    border-radius: 15px;
+    overflow: hidden;
+    // background: var(--color-background-hover);
+    // box-shadow: 0px 0px 15px #000000aa;
+}
+
+table.grid tbody>tr>td img {
+    width: 100%;
+    height: var(--grid-image-height);
+    object-fit: cover;
+}
+
+table.grid tr:hover {
+    // background: var(--color-background-hover);
+    // background-color: var(--color-text);
+    // color: var(--color-background);
+    // outline: 2px solid var(--color-accent);
+    // outline-offset: 3px;
+    // box-shadow: 0px 0px 15px var(--color-accent-lighter), 0px 0px 45px var(--color-accent);
+
+}
+// table.grid tbody>tr img 
+// {
+//     transition: transform .1s linear;
+//     zoom: 1;
+// }
+// table.grid tbody>tr:hover img 
+// {
+//     transform:scale(1, 4);
+//     overflow: hidden
+// }
+table.grid thead {
+    display: none;
+}
+
+table.grid tbody>tr>td:nth-child(2) a,
+table.grid tbody>tr>td:nth-child(1) a {
+    display: block;
+}
+
+/* make each text field an opaque color */
+table.grid tbody>tr>td {
+    overflow: visible;
+    color: var(--text-faint)
+}
+
+/* helper classes */
+.grid.grid-images-square
+{
+    --grid-image-height: 300px;
+}
+.grid.grid-images-landscape
+{
+    --grid-image-height: 100px;
+}
+.grid.grid-images-portrait
+{
+    --grid-image-height: 500px;
+}
+
+/** temporary additions */
+.grid td {
+  position: relative;
+}
+.grid button {
+  border-radius: 5px;
+  padding: 5px 8px;
+display: block;
+margin-left: auto;
+}

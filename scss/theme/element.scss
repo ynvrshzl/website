@@ -1,0 +1,7 @@
+// these are element-specific varaibles, to make styling in multiple places, controllable through single varialbes
+body 
+{
+    --color-text-bold: var(--color-text);
+    --color-text-link: var(--color-accent);
+    --color-text-link-hover: var(--color-accent-lighter);
+}

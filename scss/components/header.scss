@@ -1,0 +1,47 @@
+@keyframes pulse {
+    100%, 0% {
+        background-color: white;
+    }
+    30%,
+    90% {
+        background-color: transparent;
+    }
+}
+main > header .article-thumbnail-block
+{
+    align-items: center;
+    gap: 10px;
+    // max-width: 300px;
+    // white-space: pre;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+}
+main > header button.cta:not(:hover)
+{
+    animation: pulse 2s infinite;
+}
+main > header .description 
+{
+    max-width: 200px;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+main > header
+{
+    // background-color: var(--header-background);
+    color: white;
+    height: 50px;
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-small);
+}
+main > header img
+{
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+}

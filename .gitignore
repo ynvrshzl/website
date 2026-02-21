@@ -1,0 +1,20 @@
+# Heaviest known matter in existence.
+node_modules/
+
+# IDE-specific configs, never track
+.vscode/*
+
+# IDE-specific configs, negative lookahead (track these)
+!.vscode/extensions.json
+
+# Temporary folders & files. Not trackable.
+.bin/
+
+# Private local-only directories embedded in project
+database/src/
+
+# Temporary media files, until CDN solution
+*.jpg
+*.jpeg
+*.png
+*.webp

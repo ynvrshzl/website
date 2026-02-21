@@ -1,0 +1,21 @@
+main aside[class*="sidebar"i]
+{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0px; // sidebars can't have parent padding because they need to collapse to 0 width
+}
+main aside[class*="sidebar"i] > section
+{
+    padding: 25px;
+}
+main aside[class*="sidebar"i] > section > a
+{
+    display: block;
+}
+aside.left-sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+}

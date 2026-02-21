@@ -1,0 +1,13 @@
+/* @feature @temporary-solution
+
+    if it contains a grid table
+    make the article 100% width 
+    regardless of readable-line-width
+
+*/
+main > article:has(table.grid)
+{
+    margin-left: unset;
+    margin-right: unset;
+    --article-reading-width: 95%;
+}

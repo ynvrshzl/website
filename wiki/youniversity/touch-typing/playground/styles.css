@@ -1,0 +1,7 @@
+body {
+    --color-text-on-accent: rgb(255, 179, 230);
+    --color-accent: rgb(219, 100, 255);
+    --color-text: rgb(86, 8, 88);
+    --color-background: rgb(41, 0, 41);
+    --color-background-secondary: rgb(255, 255, 255);
+}

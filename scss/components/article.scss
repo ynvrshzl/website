@@ -1,0 +1,50 @@
+@use "./article/main";
+@use "./article/hover";
+@use "./article/line-width";
+@use "./article/tmp";
+
+/* disable text selection for the entire site except these areas */
+body 
+{
+    user-select: none;
+}
+main > article 
+{
+    user-select: text;
+    overflow: hidden;    
+    // outline: 3px solid var(--color-accent-darker);
+}
+// @experimental
+// if the article has a cover, position the title infront of it, otherwise it doesn't style it
+main > article:has(.cover:not([src=""]))
+{
+    position: relative;
+}
+main > article:has(.cover:not([src=""])) h1.title
+{
+    position: absolute;
+    top: calc(var(--cover-image-height) / 3);
+    left: calc(var(--cover-image-height) / 3);;
+    font-size: 3rem;
+    max-width: 100%;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media (width < 768px) {
+    main > article:has(.cover:not([src=""])) h1.title{
+        max-width: 15ch;
+        font-size: 2rem;
+        white-space: unset;
+    }
+}
+main > article:has(.cover:not([src=""])) section.header > p.description
+{
+    position: absolute;
+    top: calc(var(--cover-image-height) / 1.7);
+    left: calc(var(--cover-image-height) / 3);;
+}
+.cover
+{
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}

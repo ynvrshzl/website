@@ -1,0 +1,10 @@
+@use "theme";
+@use "html";
+@use "components";
+@use "classes";
+@use "animations";
+
+body 
+{
+    transition: background-color .2s linear;
+}

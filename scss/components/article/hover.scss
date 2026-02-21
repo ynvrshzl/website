@@ -1,0 +1,34 @@
+// @feature
+// fade out elements on mouse hover
+// the fade out effect only occurs when the user hovers over the website window.
+// so the effect is toggle on/off by the mouse hover. 
+// intuitive.
+
+
+// body:hover main > article p:not(:hover),
+// body:hover main > article h1:not(:hover),
+// body:hover main > article h2:not(:hover),
+// body:hover main > article h3:not(:hover),
+// body:hover main > article ul:not(:hover),
+// body:hover main > article ol:not(:hover)
+// {
+//     opacity: var(--article-hover-opacity);
+// }
+// body:hover main > article p,
+// body:hover main > article h1,
+// body:hover main > article h2,
+// body:hover main > article h3,
+// body:hover main > article ul,
+// body:hover main > article ol
+// {
+//     transition: opacity .1s linear;
+// }
+// body:hover main > article p:hover,
+// body:hover main > article h1:hover,
+// body:hover main > article h2:hover,
+// body:hover main > article h3:hover,
+// body:hover main > article ul:hover,
+// body:hover main > article ol:hover
+// {
+//     opacity: 1;
+// }

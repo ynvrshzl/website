@@ -1,0 +1,9 @@
+// applying theme variables to html
+body
+{
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-size: var(--font-size);
+    font-family: var(--font-family-base);
+    line-height: 1.7;
+}

@@ -1,0 +1,11 @@
+// these are secondary variables that modify base varialbes
+body
+{
+    --color-text-muted:                 color-mix(in srgb, var(--color-background) 75%, var(--color-text));
+    --color-accent-lighter:             color-mix(in srgb, white 70%, var(--color-accent));
+    --color-accent-darker:              color-mix(in srgb, black 35%, var(--color-accent));
+    --color-accent-transparent:         color-mix(in srgb, var(--color-accent) 25%, transparent);
+    --color-background-hover:           color-mix(in srgb, var(--color-text) 10%, var(--color-background));
+    --font-size-small:                  0.75em;
+    --font-size-smallest:               0.65em;
+}

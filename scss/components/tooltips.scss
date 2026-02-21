@@ -1,0 +1,19 @@
+body:has(:active) .tooltip
+{
+    outline: 2px solid white;
+}
+.tooltip {
+    pointer-events: none;
+    background-color: #000000;
+    color: white;
+    border-radius: 10px;
+    white-space: pre;
+    font-size: 0.75em;
+    padding: 8px 12px;
+    animation: pop-in .2s cubic-bezier(0.175, 0.885, 0.32, 1) backwards;
+
+}
+.tooltip.animating-out
+{
+    animation: pop-out .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

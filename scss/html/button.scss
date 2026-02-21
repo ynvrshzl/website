@@ -1,0 +1,16 @@
+button
+{
+    appearance: none;
+    cursor: pointer;
+    padding: 1em;
+    border-radius: 10px;
+    border: 0;
+    font-size: inherit;
+    color: inherit;
+    background-color: inherit;
+    font-family: inherit;
+}
+button:hover
+{
+    background-color: var(--color-background-hover);
+}

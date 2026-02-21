@@ -1,0 +1,71 @@
+@use "components/article";
+@use "components/sidebars";
+@use "components/header";
+@use "components/status-bar";
+@use "components/icons";
+@use "components/page-preview";
+@use "components/tooltips";
+
+.boot-screen.container
+{
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;    
+    background-color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.boot-screen.container 
+{
+    font-size: 0.8em;
+}
+.boot-screen.container progress
+{
+    width: 100%;
+    // font-size: 2rem;
+    // appearance: none;
+}
+::-moz-progress-bar
+{
+    background-color: blue;
+    border-radius: 15px;
+    outline: none;
+    box-shadow: none;
+    overflow: hidden;
+    border: none;
+}
+// here we style the graph container for the graph
+// @todo let's change this to be js only; the width for this can be confusing, since the canvas auto-sizes!
+aside .graph-container
+{
+    height: 300px;
+    width: 300px;
+    background-color: var(--color-background-secondary); 
+    // outline: 1px solid var(--color-text-muted);
+}
+// .graph-container::after
+// {
+//     content: attr(style);
+//     display: block;
+//     position: absolute;
+//     top: 25px;
+//     left: 25px;
+//     z-index: 999;
+// }
+.graph-container
+{
+    height: 500px;
+    background-color: var(--color-background); 
+    border-radius: 5px;
+    overflow: hidden;
+}
+canvas.network.graph:hover
+{
+    // background-color: purple;
+}

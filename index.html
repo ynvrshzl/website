@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- site title -->
+    <title>https://yvrs-ct-ws</title>
+    <!-- import map for common libraries and javscript namespaces -->
+    <script type="importmap"> { "imports": { "@lib/": "./src/lib/", "@api/": "./src/api/", "@mocha/": "./src/lib/mochascript/src/", "@sys/": "./src/system/", "@components/": "./src/components/" } } </script>
+    <!-- css -->
+    <link rel="stylesheet" href="style.min.css">
+    <!-- javascript -->
+    <script type="module" src="./main.js"></script>
+    <!-- site favicon -->
+    <link rel="shortcut icon" href="data:image/png;base64,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" type="image/x-icon">
+    <!-- google material icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+</head>
+<!-- html begin -->
+<body>
+    <!-- main website container -->
+    <main class="root grid-container">
+        <!-- sidebar -->
+        <aside class="left-sidebar">
+            <section>
+                <div class="flex column">
+                    <div class="title">Title</div>
+                    <div class="small description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem inventore reiciendis quam rem, quas quis assumenda illo exercitationem perferendis harum maiores, animi fuga, praesentium non! Eveniet tenetur mollitia beatae modi!</div>
+                </div>
+            </section>
+            <section>
+                <a href="home" data-tooltip="Click this link to go to back home">Home</a>
+            </section>
+        </aside>
+        <!-- main website view header -->
+        <header class="view-header">
+            <!-- region -->
+            <div class="header-region">
+                <button aria-label="toggle left sidebar" class="cta"  data-tooltip="Click to open the Graph View"><i class="material-symbols-rounded">graph_3</i></button>
+            </div>
+            <!-- region -->
+            <div class="header-region article-thumbnail-block flex row">
+                <img src="" alt="" class="thumbnail">        
+                <div class="flex column">
+                    <div class="title">Title</div>
+                    <div class="description">Description</div>
+                </div>
+            </div>
+            <!-- region -->
+            <div class="header-region">
+                <button aria-label="home" onclick="window['location']['hash']='/home'" data-tooltip="Click to go back home"><i class="material-symbols-rounded">explore</i></button>
+            </div>
+        </header>
+        <!-- article: website main content -->
+        <article class="main">
+            <!-- full width elements -->
+            <section class="hero full-width">
+                <img src="" alt="article cover" class="cover">
+            </section>
+            <!-- article title, properties and leading content -->
+            <section class="header">
+                <h1 class="title">Title</h1>
+                <p class="description">Article description</p>
+            </section>
+            <!-- main article content -->
+            <section class="body"></section>
+            <!-- optional footer -->
+            <section class="footer"><footer></footer></section>
+        </article>
+        <!-- status -->
+        <footer class="status-bar">
+            <section><code class="">alpha build</code></section>
+            <section><code class="">Websys 2026</code></section>
+        </footer>
+    </main>
+</body>
+
+</html>

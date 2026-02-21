@@ -1,0 +1,18 @@
+a
+{
+    color: var(--color-text-link);
+    text-decoration: none;
+}
+a:hover
+{
+    // text-decoration: underline;
+    color: var(--color-text-link-hover);
+}
+// stylize empty links
+a[href=""], a:not([href])
+{
+    cursor: not-allowed;
+    // pointer-events: none;
+    opacity: 0.5;
+    // color: var(--color-text);
+}

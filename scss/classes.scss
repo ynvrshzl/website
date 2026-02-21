@@ -1,0 +1,41 @@
+// <collection of uncategorized utility classes>
+@use "classes/grid";
+
+body 
+{
+    --cover-image-height: 300px;
+}
+.title
+{
+    font-weight: bold;
+}
+.description
+{
+    opacity: 0.5;
+}
+.small
+{
+  font-size: var(--font-size-small);
+}
+.flex
+{
+    display: flex;
+}
+.row
+{
+    flex-direction: row;
+}
+.column
+{
+    flex-direction: column;
+}
+.cover
+{
+    object-fit: cover;
+    height: var(--cover-image-height);
+}
+.cta
+{
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+}

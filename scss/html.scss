@@ -1,0 +1,26 @@
+// note: don't change order of these!!
+@use "html/reset";
+@use "html/body";
+@use "html/layout";
+@use "html/img";
+@use "html/pseudo";
+@use "html/a";
+@use "html/button";
+@use "html/textarea";
+
+code 
+{
+    color: var(--color-text-bold)
+}
+strong, b 
+{
+    color: var(--color-text-bold);
+}
+hr
+{
+    border-color: var(--color-text-muted);
+}
+h1, h2, h3, h4, h5, h6
+{
+    line-height: 1;
+}

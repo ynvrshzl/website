@@ -1,0 +1,1 @@
+Bridge provides communication between the front-end and the back-end using fetch() and network protocols to get website remote files and data.

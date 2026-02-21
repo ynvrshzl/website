@@ -1,0 +1,21 @@
+body
+{
+    --article-reading-width: 50ch;
+    --article-padding: 0;
+    --article-radius: 15px;
+    --article-font-size: 0.85em;
+    --article-hover-opacity: 0.3;
+    --article-background: var(--color-background-secondary);
+}
+main > article.main
+{
+    // border: 1px solid var(--color-accent-transparent);
+    scrollbar-width: none;
+    overflow-y: scroll;
+    font-size: var(--article-font-size);
+    padding: var(--article-padding);
+    border-radius: var(--article-radius);
+    background-color: var(--article-background);
+    height: 100%;
+    width: 100%;
+}

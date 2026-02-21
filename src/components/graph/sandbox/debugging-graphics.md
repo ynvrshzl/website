@@ -1,0 +1,3 @@
+Q: How do we actually debug graphics, if the current system requires `debug` to be a mode? 
+
+C: And becuase the `Mode()` class can only handle data processing; the only graphical-data mode(debug) can export is node[] data...

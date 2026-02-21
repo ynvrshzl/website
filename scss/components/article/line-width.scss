@@ -1,0 +1,12 @@
+// @feature: article readable line width
+// here we applyreadable line width *only to the top-level elements,
+// which are *always containers for content that shouldn't have this padding applied.
+// @reason
+// this allows elements to specify their own width, like full-width tables, images etc
+// using the .fw or .full-width utility class
+main > article > *:not(.full-width)
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: var(--article-reading-width);
+}

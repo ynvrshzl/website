@@ -1,0 +1,10 @@
+@media (prefers-color-scheme: dark) {
+    body
+    {
+        --color-accent: rgb(166, 90, 213);
+        --color-text-on-accent: white;
+        --color-text: rgb(255, 255, 255);
+        --color-background: rgb(0, 0, 0);
+        --color-background-secondary: hsl(0, 0%, 13%);
+    }
+}

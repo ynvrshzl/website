@@ -1,0 +1,2 @@
+#### Using in Frontend
+The static [*.json](../dist/index.json) file is fetched in the frontend... *via fetch(index.json)* Then parsed back into javascript, and mounted into global state so it is shared across the entire system and can be accessed anywhere.

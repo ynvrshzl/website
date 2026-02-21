@@ -1,0 +1,20 @@
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+// @temporary
+// collapses the "cover" image of the article if it doesn't have a src=""
+img.cover[src=""]
+{
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+}
+// thumbnail images can have placeholder blocks
+img.thumbnail[src=""], img[src=""]
+{
+    background: var(--color-text);
+    opacity: 0.1;
+}

@@ -1,0 +1,17 @@
+.page-preview::-webkit-scrollbar
+{
+    display: none;
+}
+.page-preview
+{
+    z-index: 9;
+    width: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    font-size: .8em;
+    padding: 25px;
+    border-radius: 15px;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--color-background);
+}

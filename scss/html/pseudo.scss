@@ -1,0 +1,16 @@
+:focus
+{
+    outline: 2px solid blue;
+    outline-color: inherit;
+    border-radius: inherit, 5px;
+}
+a:focus
+{
+    outline-offset: 3px;
+    border-radius: 5px;
+}
+::selection
+{   
+    background-color: var(--color-accent-transparent);
+    color: var(--color-accent);
+}

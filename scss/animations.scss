@@ -1,0 +1,33 @@
+@keyframes pop-in {
+    from {
+        scale: .5;
+        opacity: 0;
+    }
+
+    to {
+        scale: 1;
+        opacity: 1
+    }
+}
+
+@keyframes pop-out {
+    from {
+        scale: 1;
+        opacity: 1
+    }
+
+    to {
+        scale: .5;
+        opacity: 0;
+    }
+}
+
+@keyframes banner-unfold-in {
+    from {
+        transform: translate(0, -50%) scale(1, 0)
+    }
+
+    to {
+        transform: translate(0, 0) scale(1, 1)
+    }
+}
