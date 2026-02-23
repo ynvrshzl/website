@@ -31,6 +31,7 @@ export default class Main {
         this.state = String("disabled");
     }
 }   
+
 /** @todo implement! */
 class SharedDebugMemoryModule {
     constructor(argsv) {
@@ -50,6 +51,14 @@ export class VisualAnalysisCanvas {
         /** ? */
         this.paint = new Graphics.Paint(this.canvas);
     }
+    /** simply initializes "debug" mode by drawing a "debug" text in the graph */
+    init() {
+        /** @todo temporary */
+        this.canvas.style.zIndex = "9999";
+        const pos = new Positions(this.canvas);
+        const { x, y } = pos.origin();
+        this.paint.text({ x, y, data: "Graph is in debug mode" })
+    }    
     draw_fps_counter() {
 
     }
@@ -62,12 +71,4 @@ export class VisualAnalysisCanvas {
     draw_cartesian_axis(){
         
     }
-    /** simply initializes "debug" mode by drawing a "debug" text in the graph */
-    init() {
-        /** @todo temporary */
-        this.canvas.style.zIndex = "9999";
-        const pos = new Positions(this.canvas);
-        const { x, y } = pos.origin();
-        this.paint.text({ x, y, data: "Graph is in debug mode" })
-    }    
 }

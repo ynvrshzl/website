@@ -48,7 +48,7 @@ export class Axis {
  * @abstract It is essentially a translation layer between: __Canvas-coordinates__ and __Human-readable coordinates__
  * @readme [docs](../docs/cartesian-coordinates.md)
  */
-export class CartesianAxis {
+export class CartesianPlanesModule {
     constructor() {
         
         /** In a Cartesian system, we work with [4] directions (up, down, left, right). Here, we are semantically defining these __4__ directions, as [4] axis. Each Axis essentially stores length data. We can use these Axis in combination, to describe Coordinate data, while being reversible, translatable, back to the original constructs of the Canvas.*/
@@ -63,7 +63,7 @@ export class CartesianAxis {
      */
     construct(canvas) {
 
-        /** here, we read the raw dimensions of the canvas */
+        /** here, we read the raw dimensions of the canvas @todo doesn't the canvas itself have a read method for this? */
         const [ width, height ] = canvas;
 
         /** here, we divide the canvas into 4 quadrants so we can calculate the ranges of each axis. */

@@ -301,6 +301,7 @@ export class Mode {
 	}
 	/** @debug here, we handle any developer debugger-specific code that should only run on testing cycles  */
 	debug(canvas, camera, positions, data, processor, events) {
+
 		/** create a new debugger instance */
 		const debug = new Debug.default();
 		debug.mount(this.graph);
@@ -311,8 +312,8 @@ export class Mode {
 		/** draw the debug node at the centre of the graph for debugging purposes*/
 		const origin = positions.origin();
 
-		/** here, we crate sample data so the graph can render something in debug mode.*/
-		/**
+		/** 
+		 * here, we crate sample data so the graph can render something in debug mode.
 		 * @todo since we want the debug mode to update at each frame, it should be in the server loop... however, debug is methodically handled as a 'mode' so this entity can only transfer node-data. perhaps we could introduce some kind of stack call draw buffer array, so modes can exclusively push their own draw data? becusae how else can we handle this in debug? if we don't want to change the rest of the system specifically for this mode?
 		 */
 		const sample = [{ id: 0, label: `x(${Math.round(origin.x)}), y(${Math.round(origin.y)})`, href: null }];

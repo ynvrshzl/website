@@ -1,36 +1,43 @@
-# Converting Canvas coordinates to Cartesian
-In this documentation, sandbox enviornment, we study and learn the calculations behind the Cartesian System
+# Cartesian Axis System
+In this Documentation/sandbox enviornment series, we study and explore the calculations behind the Cartesian System.
 
 ## Core Question
-How can we actually convert these values into axis?
+How do we actually use a Cartesian Axis system, to help make the Canvas coordinates easier to work with?
 
-Components:
+Core Components:
 - [Point]()
 - [Coordinates]()
 - [Axis]()
 - [Planes]()
 - [Cartesian System]()
 
-Steps:
-- Step 0 - [Canvas as Source](#canvas-as-source)
-- Step 1 - [Canvas synchronization](#canvas-synchronization)
-- Step 2 - [Canvas calculation]()
+Process:
+- Step 0... [Canvas as Source](#canvas-as-source) and [Model](#the-fundamental-model)
+- Step 1... [Reading](#canvas-read)
+- Step 2... [Calculation]()
+- Step 3... [Conversion]()
 
 ## Canvas as Source
-For out example, let's say we have  HTML Canvas, with dimensions of __300 x 300__. For simplicity, we'll use  __square dimensions__, but in the real system, height and width will most likely differ based on the HTML interface layout. Regardless, the mathematics and concepts described here are still applicable.
+For this example, let's assume an HTML Canvas, with dimensions of __300 x 300__. For simplicity, we'll use  __square dimensions__, in the real system, _height and width will most likely differ based on the HTML interface layout._ Regardless, the mathematics and concepts described here are still applicable.
 
 ```js
 const canvas = { w: 300,  h: 300 };
 ```
 
-The canvas becomes the original source, and the Cartesian Axis is an interpoerable layer, between Canvas coordinates, and Human-readable graphs. 
+## The Fundamental Model
+Canvas = Source, Cartesian Axis = Interoperable layer.
 
-## Canvas Synchronization
-So the first step, we need to read the Canvas width + height, so the Cartesian System can access it's values.
+The canvas becomes the Source, and the Cartesian Axis is an interpoerable layer, between Canvas coordinates, and Human-readable graphs. This is basically the model we're working with here. Everything else is just programmable translations to make these systems work!
+
+## Canvas Read
+So our 1st step, we need to read the Canvas width + height, so the Cartesian System can access it's values to calculate. An example model could look like this:
+
 ```js
-const Cax = new CartesianAxisGraph();
-Cax.read(canvas);
+const cps = new CartesianPlanesSystem();
+cps.read(canvas);
 ```
+
+The plane system now has access to the Canvas, and is ready to perform calculations.
 
 ## Canvas Calculation
 The next step is to use this as a source of calculation, to create our Cartesian Axis system. Here, we calculate half of the canvas. Which is 150. The reason we calculate this value is becuase it is the Origin of the Cartesian Axis (0, 0).
@@ -51,9 +58,11 @@ Now we essentially established two spaces: Canvas Space, and Cartesian Space. Ea
 At this stage, we are operating in cartesian space. using the cartesian-converted canvas coordinates. we can calculate axis ranges from them, as 4 axis. each axis is essentially drawing a straight line. E.g.
 
 $$ 
-    start: point(a) - end: point(b) 
+    "axis\ begin" = point(a)
 $$
-
+$$
+    "axis\ end" = point(b) 
+$$
 
 Here are the conceptual models about Axis in Cartesian Planes:
 
@@ -131,6 +140,6 @@ cax.read(HTMLCanvasElement);
 /**
  * e.g. if we pass in Canvas(150, 150) the system translates this into: Coord(0, 0) which will make user-interactions and positions and animations, human-manageable.
  */
-const canvas = {x: 150, y: 150};
+const canvas = { x: 150, y: 150 };
 const cart = {x: 0, y: 0}
 ```
