@@ -1,20 +1,90 @@
-## Converting Canvas coordinates to Cartesian
+# Converting Canvas coordinates to Cartesian
+In this documentation, sandbox enviornment, we study and learn the calculations behind the Cartesian System
+
+## Core Question
 How can we actually convert these values into axis?
 
+Components:
+- [Point]()
+- [Coordinates]()
+- [Axis]()
+- [Planes]()
+- [Cartesian System]()
+
+Steps:
+- Step 0 - [Canvas as Source](#canvas-as-source)
+- Step 1 - [Canvas synchronization](#canvas-synchronization)
+- Step 2 - [Canvas calculation]()
+
+## Canvas as Source
+For out example, let's say we have  HTML Canvas, with dimensions of __300 x 300__. For simplicity, we'll use  __square dimensions__, but in the real system, height and width will most likely differ based on the HTML interface layout. Regardless, the mathematics and concepts described here are still applicable.
+
 ```js
-// pseudo code for converting spaces: canvas -> to cax 
-const canvas = [300, 300]
+const canvas = { w: 300,  h: 300 };
+```
 
-// half of canvas (150, 150) is the cartesian origin (0, 0)
-const half = 300/2;
+The canvas becomes the original source, and the Cartesian Axis is an interpoerable layer, between Canvas coordinates, and Human-readable graphs. 
 
-// quarter of canvas (75, 75) is used as the maximum axis length.
-const quarter =  150/2 ;
+## Canvas Synchronization
+So the first step, we need to read the Canvas width + height, so the Cartesian System can access it's values.
+```js
+const Cax = new CartesianAxisGraph();
+Cax.read(canvas);
+```
 
-/**
- * @abstract conceptual model of each axis as a quadrant plane of the original canvas
- * @description at this stage, we are operating in cartesian space. using the cartesian-converted canvas coordinates. we can calculate axis ranges from them, as 4 axis. each axis is essentially drawing a straight line e.g. start(a) to end(b)
-*/
+## Canvas Calculation
+The next step is to use this as a source of calculation, to create our Cartesian Axis system. Here, we calculate half of the canvas. Which is 150. The reason we calculate this value is becuase it is the Origin of the Cartesian Axis (0, 0).
+
+```js
+const half = canvas["w"] / 2; 
+```
+Result  = 150
+
+Once we establish an origin, the rest of the Axis are simply calculations, diverging in four directions (Up, Down, Left, Right)
+
+## Calculating Axis
+Each axis, being a quadrant division, is used as the maximum axis length.
+
+Now we essentially established two spaces: Canvas Space, and Cartesian Space. Each axis will have a maximum length of 75, based on the above calculations.
+
+## Conceptual Axis Model
+At this stage, we are operating in cartesian space. using the cartesian-converted canvas coordinates. we can calculate axis ranges from them, as 4 axis. each axis is essentially drawing a straight line. E.g.
+
+$$ 
+    start: point(a) - end: point(b) 
+$$
+
+
+Here are the conceptual models about Axis in Cartesian Planes:
+
+- Each axis as a quadrant plane of the original canvas
+- If each axis is simply a divergent direction, about the oriign __(0, 0)__ 
+- At any given direction, two perpendicular axis, form a __Quadrant__
+
+## Axis
+
+Negative X
+-  Length: __(-x)__ spans (-150, 0). 
+- Canvas: Equivalent to __Canvas(0, 150)__
+- Space: center-left to origin
+
+Positive X
+- Length: __(+x)__ spans (0, 150). 
+- Canvas: Equivalent to __Canvas(150, 300)__
+- Space: origin to center-right
+
+Positive Y
+
+
+## Quadrants/Planes
+Planes (or formally Quadrants) are the emergent chunks of the Cartesian System. Dividing the Original Canvas into 4 axis, we essentially have 4 mini graphs
+
+- In our example, a Quadrant spand __150__ units. 
+- A Quadrant will span 150 units, based on two axis (x, y) and in __4__ possible arrangements of directions
+
+
+
+```js
 const axis = {
     /** 
      * axis -x 
