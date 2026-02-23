@@ -68,7 +68,11 @@ export class VisualAnalysisCanvas {
     draw_translation_event(){
         this.graph.camera.debug();
     }
+    /**
+     * visual debugging graph, to help visualize the cartesian plane, vs the canvas coordinates.
+     */
     draw_cartesian_axis(){
+        /** here, we visually debug the planes becuase it's impossible to mentally visualize this lol. */
         
     }
 }

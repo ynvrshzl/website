@@ -73,10 +73,9 @@ export class CartesianPlanesModule {
         }
     }
     /**
-     * visual debugging graph, to help visualize the cartesian plane, vs the canvas coordinates.
+     * the actual debugging of this graph, is handled in [debugger.js]()
      */
     debug() {
-        /** here, we visually debug the planes becuase it's impossible to mentally visualize this lol. */
     }
     /**
      * @description This operation will convert: __raw canvas coordinates__ to __Cartesian plane coordinates__
