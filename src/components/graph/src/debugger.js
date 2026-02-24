@@ -1,62 +1,49 @@
 import * as Graphics from "./graphics.js"
-import { Positions } from "./axis.js";
+import * as Axis from "./axis.js";
 
 /**
  * Main system debug process
  */
 export default class Main {
     constructor() {
-        /**
-         * This class stores the Graph instance for debugging.
-         */
+        /** This property stores the Graph instance for debugging.  */
         this.graph = null;
-        /**
-         * This property can be used as a flag for the external world, that debug mode is enabled.
-         */
-        this.state = String("disabled");
     }
     mount(instance) {
         this.graph = instance;
     }
-    /**
-     * Run this operation when you want to enable network-graph debug mode
-     */
-    enable() {
-        this.state = String("enabled");
-    }
-    /**
-     * Run this operation when you want to disable network-graph debug mode
-     */
-    disable() {
-        this.state = String("disabled");
+    /** @todo so when we debug, do we want to setup our modular debug systems, inside mode/debug itself? or here? */
+    init(){
+        const analysis_layer = new VisualAnalysisCanvas(this.graph);
+        analysis_layer.mount(this.graph);
     }
 }   
-
-/** @todo implement! */
-class SharedDebugMemoryModule {
-    constructor(argsv) {
-        this.canvas = argsv.canvas;
-    }
-}
 
 /**
  * Creates a new pseudo-canvas to draw debug graphics.
  */
 export class VisualAnalysisCanvas {
-    constructor(instance){
+    constructor(){
         /** ? */
-        this.graph = instance;
+        this.graph = null;
         /** ? */
         this.canvas = new Graphics.Canvas();
         /** ? */
         this.paint = new Graphics.Paint(this.canvas);
     }
+    mount(instance) {
+        this.graph = instance;
+    }
     /** simply initializes "debug" mode by drawing a "debug" text in the graph */
     init() {
+
         /** @todo temporary */
         this.canvas.style.zIndex = "9999";
-        const pos = new Positions(this.canvas);
+
+        const pos = new Axis.Positions(this.canvas);
+        
         const { x, y } = pos.origin();
+        
         this.paint.text({ x, y, data: "Graph is in debug mode" })
     }    
     draw_fps_counter() {
@@ -74,5 +61,12 @@ export class VisualAnalysisCanvas {
     draw_cartesian_axis(){
         /** here, we visually debug the planes becuase it's impossible to mentally visualize this lol. */
         
+    }
+}
+
+/** @todo implement! */
+class SharedDebugMemoryModule {
+    constructor(argsv) {
+        this.canvas = argsv.canvas;
     }
 }

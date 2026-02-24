@@ -302,9 +302,10 @@ export class Mode {
 	/** @debug here, we handle any developer debugger-specific code that should only run on testing cycles  */
 	debug(canvas, camera, positions, data, processor, events) {
 
-		/** create a new debugger instance */
+		/** Create a new debugger instance */
 		const debug = new Debug.default();
 		debug.mount(this.graph);
+		debug.init();
 
 		/** here we store the debug, inside the graph, essentially a two-way-sync so we can call debug operations elsewhere */
 		this.graph.debug = debug;
