@@ -47,7 +47,6 @@ export class Main {
 		this.canvas.init();
 		this.canvas.inside(this.inside);
 		this.canvas.post();
-		console.log({"textAlign": this.canvas.context.textAlign});
 
 		/** 
 		 * @event "article-render"
@@ -63,13 +62,11 @@ export class Main {
 		this.camera = new Scene.Camera(this.canvas);
 
 		/**
-		 * here we create a new server for the network-graph.
-		 * essentially this is how the graph will continously
-		 * react to user-interaction events.
+		 * @description here we create a new server for the network-graph.  * essentially this is how the graph will continously * react to user-interaction events.
+		 * @todo, the server init is confusing here. we should move new LPU to this graph
 		 */
 		this.server = new Server();
 		this.server.sync(this);
-		/** @todo, the server init is confusing here. we should move new LPU to this graph */
 		this.server.init();
 	}
 	/**

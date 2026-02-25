@@ -299,7 +299,10 @@ export class Mode {
 		/** @returns when this mode has finished it's processing, it returns the data */
 		return data.output;
 	}
-	/** @debug here, we handle any developer debugger-specific code that should only run on testing cycles  */
+	/** 
+	 * @debug here, we handle any developer debugger-specific code that should only run on testing cycles  
+	 * @todo it might be useful since this operation can access the graph's original canvas, camera, postiions, data, etc...
+	*/
 	debug(canvas, camera, positions, data, processor, events) {
 
 		/** Create a new debugger instance */
@@ -307,7 +310,10 @@ export class Mode {
 		debug.mount(this.graph);
 		debug.init();
 
-		/** here we store the debug, inside the graph, essentially a two-way-sync so we can call debug operations elsewhere */
+		/** 
+		 * here we store the debug, inside the graph, essentially a two-way-sync so we can call debug operations elsewhere.
+		 * @todo this might be useful in the case we want to call debug from other graph modules, as in the cartesian axis system...
+		 */
 		this.graph.debug = debug;
 
 		/** draw the debug node at the centre of the graph for debugging purposes*/
@@ -317,7 +323,7 @@ export class Mode {
 		 * here, we crate sample data so the graph can render something in debug mode.
 		 * @todo since we want the debug mode to update at each frame, it should be in the server loop... however, debug is methodically handled as a 'mode' so this entity can only transfer node-data. perhaps we could introduce some kind of stack call draw buffer array, so modes can exclusively push their own draw data? becusae how else can we handle this in debug? if we don't want to change the rest of the system specifically for this mode?
 		 */
-		const sample = [{ id: 0, label: `x(${Math.round(origin.x)}), y(${Math.round(origin.y)})`, href: null }];
+		const sample = [{ id: 0, label: `X: (${Math.round(origin.x)}), Y: (${Math.round(origin.y)}), Frame: 1/60`, href: null }];
 
 		/** the graph requires some kind of node data, so we pass in placeholder values */
 		data.output = processor.abstract({

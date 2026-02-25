@@ -14,8 +14,9 @@ export default class Main {
     }
     /** @todo so when we debug, do we want to setup our modular debug systems, inside mode/debug itself? or here? */
     init(){
-        const analysis_layer = new VisualAnalysisCanvas(this.graph);
+        const analysis_layer = new VisualAnalysisCanvas();
         analysis_layer.mount(this.graph);
+        analysis_layer.init();
     }
 }   
 
@@ -23,28 +24,39 @@ export default class Main {
  * Creates a new pseudo-canvas to draw debug graphics.
  */
 export class VisualAnalysisCanvas {
+    
     constructor(){
+
         /** ? */
         this.graph = null;
         /** ? */
         this.canvas = new Graphics.Canvas();
         /** ? */
         this.paint = new Graphics.Paint(this.canvas);
+
     }
     mount(instance) {
         this.graph = instance;
+        
     }
     /** simply initializes "debug" mode by drawing a "debug" text in the graph */
     init() {
-
-        /** @todo temporary */
-        this.canvas.style.zIndex = "9999";
-
-        const pos = new Axis.Positions(this.canvas);
         
-        const { x, y } = pos.origin();
-        
-        this.paint.text({ x, y, data: "Graph is in debug mode" })
+        /** Yeah so unfortunately this debug visualizer doesn't pass through the server.... so graphics are never updated... becusae the server only uses nodes to paint graphics...  */
+        const Draw = new Graphics.Paint(this.canvas);
+
+        /** Logging the canvas, shows that it hasn't finished initializing... */
+        console.log(this.graph.canvas);
+
+        /** 
+         * it appears that the graph initializes the canvas, after the mode... what. lol. so *unfortunately this wouldn't work...
+         * const pos = new Axis.Positions(this.graph.canvas);
+         * const { x, y } = pos.origin();        
+         */
+
+        /** @todo it also appears that if we draw on the grpah canvas itself, it's always overwritten by the server, sourcing from the nodes... so we're thinking the only solution here is to build a second, pseudo-canvas! */
+        Draw.text({ x: 250, y: 250, data: "Graph is in debug mode" })
+
     }    
     draw_fps_counter() {
 
