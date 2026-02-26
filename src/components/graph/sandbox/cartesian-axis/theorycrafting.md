@@ -1,0 +1,6 @@
+## Theorycrafting:
+Here we explore abstract possibilities and solutions, before jumping directly into code.
+
+- __"Axis as units":__ so conceptually, if we create four directional axes from the origin point (0, 0), then we have values for each axis. so when we convert coordinate spaces, we can simply work with each Axis.points or Axis.range
+- __"Graphs as units":__ Axis provide one-dimensional ranges, but since we are working with coordinates, perhaps it is more intuitive to think in terms of graphs. a Cartesian plane system is constructed from four axes in all directions, like a compass. this introduces to possibilities, either we continue to work with Axis, or we work with Graphs. with a graph however, a new structure emerges, a "quadrant."
+- __"Quadrants as entities":__ quadrants are an emergent structure in Cartesian space. Like the diameter of a circle, it is not a real structure, but rather a conceptual tool for calculation. if we introduce the quadrants as entities, we would essentially be creating 4 Canvas chunks. This is more in line with render optimization than coordinate spaces. 

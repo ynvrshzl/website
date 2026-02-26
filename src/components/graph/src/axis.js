@@ -36,85 +36,73 @@ export class Axis {
         this.range = Array(0, 0);
 
     }
-    set range([a, b]) {
+    range([a, b]) {
 
         this.range = Array(new Point(a), new Point(b));
 
     }
 }
+export class Plane {
+    /**
+     * Assembling the plane, from two axis.
+     */
+    constructor() {
+        this.axis = { x: new Axis("x"), y: new Axis("y") }
+    }
+
+}
 /**
- * @abstract This entity essentially translates (0, 0) into the center of the world
- * @abstract This entity fundamentally changes how the Canvas API processes coordinates.
- * @abstract It is essentially a translation layer between: __Canvas-coordinates__ and __Human-readable coordinates__
+ * @abstract This entity fundamentally changes how the Canvas API processes coordinates. It is essentially a translation layer between: __Canvas-coordinates__ and __Human-readable coordinates__
  * @readme [docs](../docs/cartesian-coordinates.md)
  */
-export class CartesianPlanesModule {
+export class Cartesian_Coordinate_Transformer {
     constructor() {
-        
-        /** In a Cartesian system, we work with [4] directions (up, down, left, right). Here, we are semantically defining these __4__ directions, as [4] axis. Each Axis essentially stores length data. We can use these Axis in combination, to describe Coordinate data, while being reversible, translatable, back to the original constructs of the Canvas.*/
-        this.planes = [
-            new Axis("+y"), new Axis("+x"),
-            new Axis("-y"), new Axis("-x"),
-        ];
+        /** @property {HTMLCanvasElement} Canvas as a reference memory data block inside this class. If needed by other operations or entities of this Class. */
+        this.canvas = null;
     }
     /**
-     * This operation will convert the Canvas space -> into Cartesian Space
-     * @param {HTMLCanvasElement} canvas The Cartesian Axis calculations rely on the dimensions of an HTML Canvas. Provide a canvas instance because it's screen space is used in cartesian coordinate calculations!
+     * @description Simply mounts the canvas to the system.
+     * @param {HTMLCanvasElement} canvas HTML Canvas
      */
     construct(canvas) {
-
-        /** here, we read the raw dimensions of the canvas @todo doesn't the canvas itself have a read method for this? */
-        const [ width, height ] = canvas;
-
-        /** here, we divide the canvas into 4 quadrants so we can calculate the ranges of each axis. */
-        for (const axis of this.planes) {
-            /** @todo */
-            axis.range()
-        }
+        this.canvas = canvas;
     }
     /**
-     * the actual debugging of this graph, is handled in [debugger.js]()
+     * @description This operation will convert: __Raw canvas coordinates__ to __Cartesian plane coordinates__
+     * @param {Number} x **HTML Canvas (x) value** e.g. `50`
+     * @param {Number} y **HTML Canvas (y) value** e.g. `200`
      */
-    debug() {
-    }
-    /**
-     * @description This operation will convert: __raw canvas coordinates__ to __Cartesian plane coordinates__
-     * @abstract in abstract terms, we are creating a negative/positive slider, from a base value.
-     * @summary If the canvas dimensions are __Dimensions(300, 300)__ -> and we have __Coordinates(150, 150)__ -> this operation converts the coordinates to -> Cartesian(0, 0)
-     */
-    convert_canvas_coordinates_to_cartesian(x, y) {
-        /**
-         * @step the first step is to establish the origin(0, 0). essentially, we can compute the middle of the canvas to the real canvas coordinate origin, however, we need to translate the canvas coordinates -> into cartesian coordinates. In our example, the middle of the Canvas would be (150, 150). We want it to be (0, 0).
-         * @abstract from (0, 0), we can determine what axis (direction) we are working with, based on positive/negative values.
-         */
-        const o = [0, 0];
-        /**
-         * mx, my = max "x" and max "y" of the original canvas to determine pixel values.
-         */
-        const [cx, cy] = [this.canvas.width, this.canvas.height];
-        /**
-         * raw coordinates of the center of the canvas
-         */
-        const co = [cx / 2, cy / 2];
+    conversion(x, y) {
 
-        /**
-         * @description in our abstract example, the canvas origin would be (150, 150)...
-         * @description so now, instead of the canvas dimensions being (300, 300) -> it is converted into -> (150, 150) as the maximum positive range, and (-150, -150) as the maximum negative range.
-        */
-        const calculation = Array(x, y).map((coordinate, index) => {
+        /** Canvas width as max x, Canvas height as max y. Treat the width/height of the Canvas, as (x, y) values. */
+        const [ cmx, cmy ] = [ this.canvas.width, this.canvas.height ];
+        
+        /** Canvas center x, Canvas center y. These values are used to calculate negative/positive values. */
+        const [ccx, ccy] = [ cmx / 2, cmy / 2 ];
 
-            /** the output Cartesian plane point */
-            let point = new Point(0);
+        /** Return Cartesian(x, y). The order of these calculations matter becuase we are essentially deriving polarity, using entirely math. */
+        const [ cax, cay ] = [ (x - ccx), (ccy - y) ];
 
-        });
-
-        /** return the final calculated cartesian coordinates */
-        return calculation;
+        /** Return */        
+        return [ cax, cay ]
     }
     /**
      * this operation essentially undoes any cartesian coordinate calculations, back into their original canvas values.
      */
-    convert_cartesian_to_canvas(x, y) { }
+    reversion(x, y) {
+
+        /** Canvas width as max x, Canvas height as max y. Treat the width/height of the Canvas, as (x, y) values. */
+        const [ cmx, cmy ] = [ this.canvas.width, this.canvas.height ];
+        
+        /** Canvas center x, Canvas center y. These values are used to calculate negative/positive values. */
+        const [ccx, ccy] = [ cmx / 2, cmy / 2 ];
+
+        /** Return Cartesian(x, y). The order of these calculations matter becuase we are essentially deriving polarity, using entirely math. */
+        const [ cax, cay ] = [ (x + ccx ), (ccy - y ) ];
+
+        /** Return */        
+        return [ cax, cay ]
+    }
 }
 /**
  * @description this entity applies __transformation operations__ like __scale__ and __translation__ to __objects__ inside a __Canvas__

@@ -11,22 +11,22 @@ export class Canvas {
      * the class block stores information about the HTML related properties in the canvas
      */
     constructor() {
-        
+
         /** The HTML Canvas element itself */
         this.element = null;
-        
+
         /** The context of the HTML Canvas */
         this.context = null;
-        
+
         /** The clientBoundingRect of the HTML Canvas. */
         this.__rect__ = null;
-        
+
         /** The cssclasses of the HTML Canvas */
         this.cssclasses = ["network", "graph"];
-        
+
         /** The height of the HTML Canvas */
         this.height = Number;
-        
+
         /** The width of the HTML Canvas */
         this.width = Number;
     }
@@ -54,10 +54,16 @@ export class Canvas {
      * @todo how can we make the canvas gracefully auto-size to it's parent container?
      */
     fit() {
+        /** Find the parent HTML container, which contians this Canvas HTML instance */
         const parent = this.element.parentElement;
+        /** Get the width of parent HTML container */
         const width = parent.clientWidth;
+        /** Get the height of parent HTML container */
         const height = parent.clientHeight;
+        /** Set element attributes directly. As the Canvas requires such. */
         this.element.set({ height, width });
+        /** Set internal class variables for easy read reference of external entities. Though the HTML element itself contains the read-only value for height/width aswell.*/
+        [this.height, this.width] = [height, width]
     }
     /**
      * here, we add the canvas, inside the target container.
@@ -181,10 +187,10 @@ export class BitmapFrame {
     clear() {
 
         /** here, we get the coordinates from the camera,  becuase there might be transformations and scaling, the camera already handles this, so the frame can simply read it.  @todo does it make sense to have a camera, be a member of the frame? */
-        const [ width, height, origin ] = this.graph.camera.viewbox();
+        const [width, height, origin] = this.graph.camera.viewbox();
 
         /** @todo translation needs to also apply to clear frame! */
-        const [ x, y ] = this.graph.camera.translation;
+        const [x, y] = this.graph.camera.translation;
 
         /** clear the entire canvas, with scaling considered */
         this.graph.canvas.context.clearRect(x, y, width, height);

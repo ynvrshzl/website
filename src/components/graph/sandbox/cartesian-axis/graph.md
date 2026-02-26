@@ -1,0 +1,4 @@
+## Graph
+In mathematics, a Graph is a 2D plane, made of two axis: _(x, y)_. This is how the [Canvas API]() handles graphics by default, however, when we start working with space, we run into a fundamental issue: The Canvas thinks (0, 0) is the first pixel (the top left corner), but the human sees (0, 0) as the origin of the world.
+
+Fundamentally, this is an issue of Global vs Local space. The Canvas can be thought of as Local space, and our conceptual system is Global space. This can be very confusing to manage on our own, so we build abstraction layers to protect us from becoming overwhelmed by the details.

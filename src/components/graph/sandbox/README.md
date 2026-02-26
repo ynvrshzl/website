@@ -4,10 +4,9 @@ Theorycrafting engineer notebook with general notes for network-graph, cartesian
 Assorted design-oriented system architecture exploring questions.
 
 Sandboxes
-- [Cartesian-axis](cartesian-axis.md) 
+- [Cartesian-axis](./cartesian-axis) 
 - [Conditional-graphics](conditional-graphics.md) 
 - [Debugging-graphics](debugging-graphics.md) 
-- [Local-global-space](local-global-space.md) 
+- [Local-global-space](cartesian-axis/local-global-space.md) 
 - [Node-states](node-states.md) 
-- [Quadrants](quadrants.md) 
 - [Scenes](scenes.md)

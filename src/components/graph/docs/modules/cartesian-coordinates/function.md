@@ -1,0 +1,2 @@
+## Function:
+This system essentially acts as a translation layer interface between the Canvas API and Human-readable spatial information. Thus, it is a two-way translator, able to translate raw Canvas coordinates into Cartesian space, and translate any Cartesian-space coordinates, back into Canvas coordinates so the original data is always true
