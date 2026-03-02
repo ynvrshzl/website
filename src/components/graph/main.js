@@ -11,7 +11,7 @@ export const main = {
         const parent = document.querySelector("main aside.left-sidebar section");
         
         /** @todo Created a temporary container so the network graph always sizes correctly to the surrounding HTML layout. */
-        const container = create("div").css("graph-container").atstart(parent);
+        const container = create("div").css("graph-container").inlinecss("width: 300px; height: 300px;").atstart(parent);
 
         /** here we instantiate the graph with the config */
         new Graph({ 
