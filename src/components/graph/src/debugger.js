@@ -2,7 +2,8 @@ import * as Graphics from "./graphics.js"
 import * as Axis from "./axis.js";
 
 /**
- * Main system debug process
+ * Main system debug process. 
+ * @link [System Documentation](../../docs/modules/debugger)
  */
 export default class Main {
     constructor() {
@@ -29,6 +30,7 @@ export default class Main {
         new Test(this.graph)[test]();
     }
 }
+
 /**
  * This entity contains swappable unit tests for a Network Graph Instance.
  */
