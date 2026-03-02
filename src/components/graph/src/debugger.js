@@ -1,5 +1,5 @@
 import * as Graphics from "./graphics.js"
-import * as Axis from "./axis.js";
+import * as Coords from "./coordinates.js";
 
 /**
  * Main system debug process. 
@@ -46,7 +46,7 @@ class Test {
         const [x, y] = [ 75, 25 ];
 
         /** Cartesian Coordinate System */
-        const ccs = new Axis.Cartesian_Coordinate_Transformer();
+        const ccs = new Coords.Cartesian_Coordinate_Transformer();
         
         /** Mount to canvas (required for calculations) */
         ccs.construct(this.graph.canvas);        
