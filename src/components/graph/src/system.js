@@ -68,16 +68,11 @@ export class Server {
 
 		/**
 		 * @abstract  here, the state machine will process one browser frame. any zoom, hover etc events should happen after the initial frame is painted
-		 * @todo 'interpret' should probably separate event flags -> into logic branches -> for the lpu state machine to calculate and intelligently decide how to handle incoming event data... (maybe object lookups!)
 		 * @todo yeah, becuase the events system is essentially hidden in this main server loop, so we need a way to define the relationship between the events signals -> and the lpu processing into state -> and at next server frame -> the graphics simply draw from the newly updated data.
 		 */
-		
-		/** 
-		 * @todo User-events have been disabled until the rest of the system becomes stable enough to implement user-interactions! bu tthis is still a key part of the structure so we just don't want it to get in the way. 
 		this.lpu.interpret();
 		this.lpu.branch();
 		this.lpu.evaluate();
-		*/
 
 		/** 
 		 * @abstract here we request a server restart. 
@@ -287,6 +282,7 @@ export class LPU {
 	evaluate(){}
 	/**
 	 * @description The LPU Interpreter operation will translate -> event flags -> into LPU stateful data-block memory, so the other entities can access states as meaningful data.
+     * @todo 'interpret' should probably separate event flags -> into logic branches -> for the lpu state machine to calculate and intelligently decide how to handle incoming event data... (maybe object lookups!)
 	*/
 	interpret() {
 
@@ -324,7 +320,7 @@ export class LPU {
 		}
 	}
 	/**
-	 * @todo branch? really? comeon guys! give this a proper unit!! 
+	 * @todo branch? really? comeon guys! give this a proper programming model 
 	 * @todo each state machine branch should have it's own dedicated method, becuase if/else branches get very messy.
 	 */
 	branch() {

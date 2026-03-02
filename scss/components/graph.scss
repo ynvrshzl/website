@@ -3,13 +3,12 @@
 // .graph-container canvas
 .graph-container
 {
-    outline: 1px dashed var(--color-text-muted);
     height: 500px;
-    background-color: var(--color-background-secondary);
     border-radius: 10px;
     overflow: hidden;
+    margin-block: 25px;
 }
 canvas.network.graph:hover
 {
-    // background-color: purple;
+    background-color: var(--color-background-secondary);
 }
