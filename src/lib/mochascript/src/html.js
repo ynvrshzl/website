@@ -1,23 +1,29 @@
-/** components library
- * 
- * @author hazl
+/** 
+ * Components library
+ * Copyright Hazl (c) 2025 All rights reserved.
+*/
+
+/**
  * @description this function creates html elements and components.
  * @abstract components can be built in two ways: using the classic object-configuration with utilities `.set()` or `.attr()` or can be daisy-chained as in... `create("div").in(body).with("text")`
- * @note inspired by [python]() and [strudel.cc]()
  * @returns `HTML element reference`
- * 
 */
 export function create(tag = 'html'){
     const element = document.createElement(tag);
     Object.assign(element, methods);
     return element;
 }
+/**
+ * Helper function to create a table, list, etc.
+ */
 export function component(namespace = "table, list, etc.."){
     const element = templates[namespace]();
     Object.assign(element, methods);
     return element;
 }
-
+/**
+ * Not implemented yet!
+ */
 const templates = {
     table(){
         const parent = create("table");
@@ -25,7 +31,6 @@ const templates = {
         return parent;
     }
 }
-
 /** 
  * @description methods for `create()`
  * @abstract these names are chosen becuase *every HTML element contains built-in prototytpe methods like: a.href and div.class, so those names can't be used as methods

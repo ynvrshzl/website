@@ -1,7 +1,8 @@
+/**
+ * Logging utilities
+ */
 export const methods = {
-    /** equivalent to console.log("") but keeps state along the chain.
-     * very useful for logging exact call satck and memory at each step. 
-     * comes with colors and symbols for increasing readability */
+    /** Equivalent to console.log() but keeps state along the chain. Very useful for logging exact call satck and memory at each step. Comes with colors and symbols for increasing readability */
     print(msg){
         console.log(msg, this)
         return this;
