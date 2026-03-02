@@ -1,4 +1,4 @@
-import { Main as NetworkGraph } from "@components/graph/src/system.js";
+import { Main as NetworkGraph } from "@components/graph/src/export.js";
 
 /** 
  * @plugin using the network graph component directly inside an article page! 

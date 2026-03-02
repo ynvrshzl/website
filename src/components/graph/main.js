@@ -1,5 +1,5 @@
 import { create } from "@mocha/html.js";
-import { Main as Graph } from "./src/system.js";
+import { Main as Graph } from "./src/export.js";
 
 /** Here, we intialize the network graph, treated as a websystem component. Note that this architecture can be used as both a websystem ui component, and an inline graphic inside markdown codeblocks, using the [code-api]()! The reason we create a separate {main} object * is becusae the web-system requires all * components to be structured this way.  */
 export const main = {

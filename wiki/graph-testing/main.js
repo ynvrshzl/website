@@ -1,4 +1,4 @@
-import { Main as NetworkGraph } from "@components/graph/src/system.js";
+import { Main as NetworkGraph } from "@components/graph/src/export.js";
 import { create } from "@lib/mochascript/src/html.js";
 
 /** 
