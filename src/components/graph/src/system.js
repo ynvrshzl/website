@@ -82,69 +82,88 @@ export class Server {
 	}
 }
 
+/** This class provides a memory block for implementing event storage data. To provide event communicatation with the external world.  */
+class Stack {
+	constructor(){
+
+			/** Source definition await... */
+			this["POINTERXY"] = Array(0, 0);
+			
+			/** Source definition await... */
+			this["CLICKING"] = Boolean(false);
+			
+			/** Source definition await... */
+			this["PANNING"] = Boolean(false);
+			
+			/** Source definition await...*/
+			this["CTXMENU"] = Boolean(false);
+			
+			/** Source definition await... */
+			this["DRAGGING"] = Boolean(false);
+			
+			/** This memory block contains a boolean state of the user hovering over the graph window. */
+			this["HOVERING"] = Boolean(false);
+			
+			/** This memory block contains the boolean state of the user zooming event.  */
+			this["ZOOMING"] = Boolean(false);
+			
+			/** This event stack data block contains the direction as string ("in" or "out") of the zoom event. */
+			this["ZOOMDELTA"] = String;
+	}
+}
+
 /**
  * @class this is a controller for user-interaction events, like zooming and clicking.
  * @description this class __only__ returns event data, not canvas transformations. those operations are handled by the other parts of the process.
  */
 export class Events {
-	/**
-	 * 
-	 */
+	
 	constructor() {
-		/**
-		 * we store the reference to the canvas, so we can properly source the canvas positions and element information.
-		 */
+
+		/** Store a reference to the canvas, so we can properly source the canvas positions and element information.  */
 		this.canvas = null;
+		
+		/** This memory block is how events store data, and communicate with the external world.  */
+		this.stack = new Stack();
+
 		/**
-		 * this memory block is how events store data, and communicate with the external world.
-		 */
-		this.stack = {
-			/** @target canvas and nodes */
-			"POINTERXY": Array(0, 0),
-			/** @target nodes  */
-			"CLICKING": Boolean(false),
-			/** @target canvas  */
-			"PANNING": Boolean(false),
-			/** @target mouse */
-			"CTXMENU": Boolean(false),
-			/** @target canvas  */
-			"DRAGGING": Boolean(false),
-			/** @target canvas  */
-			"HOVERING": Boolean(false),
-			/** @target canvas  */
-			"ZOOMING": Boolean(false),
-			/** @target canvas  */
-			"ZOOMDELTA": String,
-		}
-		/**
-		 * @description logical map for event names and operations
+		 * @todo this should probably be made clearer and actuall implement flags somehow?
+		 * @description Event logic map for event names, their mutated flags, and their operations
+		 * 
 		 * @param {string} event is the actual DOM event name
 		 * @param {method} method is the method to execute when the event method
+		 * @param {array} flags awaiting implementation in future update...
 		 */
 		this.map = [
 			{
 				dom: 'mousemove',
 				method: this.mousemove,
+				flags: [],
 			},
 			{
 				dom: "mousedown",
 				method: this.mousedown,
+				flags: [],
 			},
 			{
 				dom: "mouseup",
 				method: this.mouseup,
+				flags: [],
 			},
 			{
 				dom: 'wheel',
 				method: this.mousewheel,
+				flags: [],
 			},
 			{
 				dom: 'mouseenter',
 				method: this.mouseenter,
+				flags: [],
 			},
 			{
 				dom: 'mouseleave',
 				method: this.mouseleave,
+				flags: [],
 			},
 		];
 	}
@@ -178,22 +197,22 @@ export class Events {
 		});
 	}
 	/**
-	 * @abstract use this operation, to store event data. essentially, how this event will communicate with the outside world.
-	 * @description if an external entity requires event data, it will access event data stored in this class memory object { stack }
-	 * @param {String} name an uppercase or lowercase flag value of the event stack
-	 * @param {any} data
+	 * @abstract Essentially, how this event will communicate with the outside world. 
+	 * @description Use this operation, to assign/store event data in a stack memory data block. 
+	 * @param {String} string case-wise, can be an uppercase or lowercase flag in the event stack to assign data.
+	 * @param {any} data of any kind. @todo definitely should enforce data typing here, but it works.
 	 */
-	FLAG(name, data) {
+	flag(string, data) {
 		/** 
 		 * here, we sanitize the flag string *if needed... which could help correct accidental flag string args. 
 		 */
-		const F = name.trim().toUpperCase();
+		const block = string.trim().toUpperCase();
 		/** 
 		 * @todo this is probably memory unsafe, but it's okay for now!
 		 * @description assign the data to the stack key.
 		 * @abstract in theory... this could handle *any kind of data block. both strings or objects. but we aren't working with tree stacks or crazy memory models.
 		 */
-		this.stack[F] = data;
+		this.stack[block] = data;
 	}
 	/**
 	 * @abstract this is the main graph user-interaction event. 
@@ -212,7 +231,7 @@ export class Events {
 		/** mouse y positions, converted to canvas y */
 		const my = event.clientY - box.top;
 		/** here, we return the event data. at this stage, nodes are ready to be calculated for collision with pointer, but that's not the responsibility of the events controller! */
-		this.FLAG("POINTERXY", [mx, my]);
+		this.flag("POINTERXY", [mx, my]);
 
 	}
 	mousedown(event) {
@@ -221,26 +240,26 @@ export class Events {
 		 * @description here, we store the 3 types of mouse click buttons
 		*/
 		event.preventDefault();
-		if (event.button === 0) this.FLAG("CLICKING", true)
-		if (event.button === 1) this.FLAG("PANNING", true)
-		if (event.button === 2) this.FLAG("CTXMENU", true)
+		if (event.button === 0) this.flag("CLICKING", true)
+		if (event.button === 1) this.flag("PANNING", true)
+		if (event.button === 2) this.flag("CTXMENU", true)
 
 	}
 	mouseup(event) {
 		event.preventDefault();
-		if (event.button === 0) this.FLAG("CLICKING", false)
-		if (event.button === 1) this.FLAG("PANNING", false)
-		if (event.button === 2) this.FLAG("CTXMENU", false)
+		if (event.button === 0) this.flag("CLICKING", false)
+		if (event.button === 1) this.flag("PANNING", false)
+		if (event.button === 2) this.flag("CTXMENU", false)
 
 	}
 	mouseenter() {
 
-		this.FLAG("HOVERING", true);
+		this.flag("HOVERING", true);
 
 	}
 	mouseleave() {
 
-		this.FLAG("HOVERING", false);
+		this.flag("HOVERING", false);
 
 	}
 	/**
@@ -256,8 +275,8 @@ export class Events {
 		 * @abstract essentially, the browser handles the mouse zoom event by a range from -1 to 1. but not the actual level
 		 */
 		const delta = event.deltaY < 0 ? "in" : "out";
-		this.FLAG("ZOOMING", true);
-		this.FLAG("ZOOMDELTA", delta);
+		this.flag("ZOOMING", true);
+		this.flag("ZOOMDELTA", delta);
 	}
 }
 
@@ -284,10 +303,7 @@ export class LPU {
 	 * @description The LPU Interpreter operation will translate -> event flags -> into LPU stateful data-block memory, so the other entities can access states as meaningful data.
      * @todo 'interpret' should probably separate event flags -> into logic branches -> for the lpu state machine to calculate and intelligently decide how to handle incoming event data... (maybe object lookups!)
 	*/
-	interpret() {
-
-
-	}
+	interpret() {}
 	/**
 	 * @todo this should probably be handled by another entity? is it really  logical processing to access event flags safely?
 	 * @description This operation provides safe, and simplified access to state values.
@@ -329,6 +345,19 @@ export class LPU {
 
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
 		if (event("HOVERING") === true) {
+
+			/** If hovering over the graph, we can process node hovering first  */
+			const { nodes } = Graph.nodes;
+
+			/** Processing each "node" in Graph memory */
+			nodes.forEach((node) => {
+
+				const [ x, y ] = [node];
+				const [ptrx, ptry] = event("POINTERXY");
+				console.log( x, y, ptrx, ptry );
+				
+				/** mathematical calculation for distance here! */				
+			})
 
 			/** at this branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
 			if (event("CLICKING") === true) {
@@ -380,4 +409,16 @@ export class LPU {
 			}
 		}
 	}
+}
+
+/**
+ * @todo finding a sustainable event model for actual operations of each event. "branching"
+ */
+class NodeEvent
+{
+
+}
+class CameraEvent
+{
+
 }
