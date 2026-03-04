@@ -6,7 +6,7 @@ const routes = {
         }
     },
     error(){
-
+        window.location.hash = "/error";
     }
 }
 
@@ -21,8 +21,12 @@ export const main = {
         window.addEventListener("click", resolvers.anchor_click);
         window.addEventListener("auxclick", resolvers.open_in_new_tab);
     },
-    /** utility for safely changing the window url hash */
-    change_route(url){},
+    /** This operation is used for safely changing the URL hash of the window 
+     * @param {String} url Any valid string url. E.g. "path/to/file"
+    */
+    change_to_url(url){
+        window.location.hash = "/" + url.split("/").slice(3).join("/").replace(".md", "");
+    },
     
     /** sample utility for resolving conflicting link paths like in obsidian */
     resolve_url_to_database_path(){},

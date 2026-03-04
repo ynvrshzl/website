@@ -8,16 +8,67 @@ import * as Debug from "./debugger.js";
  * @description this class is used to store abstract data, most commonly for nodes.
  * @description the `Data` class contains program memory for a `NetworkGraph` instance.
  */
-export class AbstractData {
-	constructor() { }
+export class Abstract {
+	constructor(){
+	}
+	
+	/** @todo optionally initialise data */
+	init() {
+		this.snapshot();
+	}
+
+	/** @todo save a snapshot in memory of the current data block */
+	snapshot() {
+	}
+	
 	/** @todo to be implemented */
-	store(){}
+	store({data, block}) {
+		Object.assign(this[data], block)
+	}
+	
 	/** @todo to be implemented */
-	lock(){}
+	lock() { }
+	
 	/** @todo to be implemented */
-	remove(){}
+	remove() { }
+
 	/** @todo to be implemented */
-	flush(){}
+	reset(){ }
+	
+	/** @todo to be implemented */
+	flush() { }
+}
+
+/** This entity provides stateful memory in store. @todo in future implementations, the state block memory should inherit and use actual data-safe operations from the parent class 'abstract'  */
+export class State extends Abstract {
+	
+	/** Data constructor for State block */
+	constructor() {
+		
+		/** Javascript shenanigans. */
+		super();
+		
+		/** This data-block contains data for 'nodes' states */
+		this.node = {
+			
+			/** Data-block for the 'hovered' node */
+			HOVERING: null,
+			
+			/** Data-block for the 'clicked' node */
+			CLICKING: null,
+			
+			/** Data-block for the 'dragged' node */
+			DRAGGING: null,
+		};
+		
+		this.canvas = {
+
+		}
+	}
+	/** SImply stores a Graph instance memory reference, inside this state memory. */
+	sync(instance){
+		this.graph = instance;
+	}
 }
 /**
  * @class a `Node` is the smallest unit in a network graph. this represents the both: the graphical data, and the semantic data for the network graph to parse and visualize.
@@ -181,7 +232,7 @@ export class Mode {
 		/**
 		 * @entity this allows us to semantically bridge data between the parts in this system
 		*/
-		const data = new AbstractData();
+		const data = new Abstract();
 
 		/**
 		  * @stage processing articles into network-graph nodes

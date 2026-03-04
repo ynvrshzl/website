@@ -1,3 +1,6 @@
+import api from "./api.js";
+import {main as Router} from "@sys/router.js";
+
 /**
  * @abstract a server provides a system to control the clock cycles of graphics.
  * @description continously running at each browser frame, *usually* 60fps, this is useful for user-interaction events, live-repaints, and network graph reactivity.
@@ -7,10 +10,10 @@ export class Server {
 
 		/** the Server creates a per-instance Logical Processing Unit, becuase it simply processes graph event data, and calls graph internal operations, through shared memory. */
 		this.lpu = null;
-		
+
 		/** here, we assign the graph instance. */
 		this.graph = null;
-		
+
 		/** this is a flag that turns the server on or off. raf = requestanimationframe, which is the server's clock */
 		this.raf = null;
 	}
@@ -55,7 +58,7 @@ export class Server {
 	loop() {
 		/** storing the graph instance as a semantic memory block. */
 		const Graph = this.graph;
-		
+
 		/**
 		 * @description this is the processed data (`from Mode(...).export()`) is now ready for painting, it is sent to the frame to parse the data into graphics
 		 * @todo the data flow here can be improved! how can we more clearly handle processing node data in __Mode__?
@@ -84,31 +87,31 @@ export class Server {
 
 /** This class provides a memory block for implementing event storage data. To provide event communicatation with the external world.  */
 class Stack {
-	constructor(){
+	constructor() {
 
-			/** Source definition await... */
-			this["POINTERXY"] = Array(0, 0);
-			
-			/** Source definition await... */
-			this["CLICKING"] = Boolean(false);
-			
-			/** Source definition await... */
-			this["PANNING"] = Boolean(false);
-			
-			/** Source definition await...*/
-			this["CTXMENU"] = Boolean(false);
-			
-			/** Source definition await... */
-			this["DRAGGING"] = Boolean(false);
-			
-			/** This memory block contains a boolean state of the user hovering over the graph window. */
-			this["HOVERING"] = Boolean(false);
-			
-			/** This memory block contains the boolean state of the user zooming event.  */
-			this["ZOOMING"] = Boolean(false);
-			
-			/** This event stack data block contains the direction as string ("in" or "out") of the zoom event. */
-			this["ZOOMDELTA"] = String;
+		/** Source definition await... */
+		this["POINTERXY"] = Array(0, 0);
+
+		/** Source definition await... */
+		this["CLICKING"] = Boolean(false);
+
+		/** Source definition await... */
+		this["PANNING"] = Boolean(false);
+
+		/** Source definition await...*/
+		this["CTXMENU"] = Boolean(false);
+
+		/** Source definition await... */
+		this["DRAGGING"] = Boolean(false);
+
+		/** This memory block contains a boolean state of the user hovering over the graph window. */
+		this["HOVERING"] = Boolean(false);
+
+		/** This memory block contains the boolean state of the user zooming event.  */
+		this["ZOOMING"] = Boolean(false);
+
+		/** This event stack data block contains the direction as string ("in" or "out") of the zoom event. */
+		this["ZOOMDELTA"] = String;
 	}
 }
 
@@ -117,12 +120,12 @@ class Stack {
  * @description this class __only__ returns event data, not canvas transformations. those operations are handled by the other parts of the process.
  */
 export class Events {
-	
+
 	constructor() {
 
 		/** Store a reference to the canvas, so we can properly source the canvas positions and element information.  */
 		this.canvas = null;
-		
+
 		/** This memory block is how events store data, and communicate with the external world.  */
 		this.stack = new Stack();
 
@@ -298,12 +301,12 @@ export class LPU {
 		this.graph = instance;
 	}
 	/** @todo this will be the actual state -> logic evaluation to handle */
-	evaluate(){}
+	evaluate() { }
 	/**
 	 * @description The LPU Interpreter operation will translate -> event flags -> into LPU stateful data-block memory, so the other entities can access states as meaningful data.
-     * @todo 'interpret' should probably separate event flags -> into logic branches -> for the lpu state machine to calculate and intelligently decide how to handle incoming event data... (maybe object lookups!)
+	 * @todo 'interpret' should probably separate event flags -> into logic branches -> for the lpu state machine to calculate and intelligently decide how to handle incoming event data... (maybe object lookups!)
 	*/
-	interpret() {}
+	interpret() { }
 	/**
 	 * @todo this should probably be handled by another entity? is it really  logical processing to access event flags safely?
 	 * @description This operation provides safe, and simplified access to state values.
@@ -340,8 +343,25 @@ export class LPU {
 	 * @todo each state machine branch should have it's own dedicated method, becuase if/else branches get very messy.
 	 */
 	branch() {
-		/** @description These are simply local variables so we don't have to specity "this" at every call.  */
-		const [event, Graph] = [this.access.bind(this), this.graph];
+		
+		/** 
+		 * @description These are simply local variables so we don't have to specity "this" at every call.  
+		*/
+		const [ 
+
+			/** Alias for this.access() */
+			event, 
+
+			/** Alias for this.graph */
+			Graph 
+
+		] = [ 
+			/** Internal operation alias */
+			this.access.bind(this), 
+			
+			/** Internal memory alias */
+			this.graph
+		];
 
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
 		if (event("HOVERING") === true) {
@@ -352,21 +372,72 @@ export class LPU {
 			/** Processing each "node" in Graph memory */
 			nodes.forEach((node) => {
 
-				const [ x, y ] = [node];
-				const [ptrx, ptry] = event("POINTERXY");
-				console.log( x, y, ptrx, ptry );
+				/** Extract 'x' + 'y' position coordinates from node data */
+				const { x, y } = node;
 				
-				/** mathematical calculation for distance here! */				
-			})
+				/** @todo Radius should probably be packaged with each node... */
+				const radius = api.nodes.scale;
+				
+				/** Pointer coordinate data 'x' + 'y' */
+				const [ptrx, ptry] = event("POINTERXY");
+
+				/** Distance between Pointer and Node coordinate values. E.g. if ptrx = 25, and 'x' = 50, the distance between is 25. This number should decrease the closer the pointer arrives to the node. */
+				const [dx, dy] = [ptrx - x, ptry - y];
+				
+				/** Becuase the above values would only work for the exact centre of the node, we apply a squareroot function using bare mathematics, to derive the summation diameter. */
+				const dist2 = [dx * dx + dy * dy]
+				
+				/** Square the radius. e.g. 10 * 10 = 100 */
+				const r2 = radius * radius
+
+				/** handle if the current node, in the loop, is being hovered */
+				if (dist2 <= r2){
+
+					/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
+					Graph.canvas.element.style.cursor = "pointer";
+
+					console.log("Node is hovered:", node);
+
+					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
+					Graph.state.node.hovering = node;
+					
+				}
+
+			});
+
+			/** @todo if there is a node being hovered, we handle that externally here */
+			if (Graph.state.node.hovering !== null){
+								
+				/** @todo how do we handle when a node is no longer being hovered? */
+				Graph.state.node.hovering = null;
+				
+			}
+
+			/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
+			if (Graph.state.node.hovering === null){
+				
+			}
 
 			/** at this branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
 			if (event("CLICKING") === true) {
 
 				/** 
-				 * @todo this is no longer event state data, now it's graphical-data... where should we store this kind of data?
-				 * @todo conditional graphics!
-				 * @description to executre Graph operations, based on the hovered node. here we calculate the canvas bounds with the nodes... nodes: { clicking, hovering }
+				 * @todo This event should only exec at pointer down?
 				 */
+				if (Graph.state.node.hovering !== null){
+					
+					/** The node that is currently being hovered, is stored in a previous operations (hover event handler) */
+					const node = Graph.state.node.hovering;
+					
+					/** Only change the window URL if the node contains a valid 'href' url. */
+					if (node.href !== null || node.href !== ""){
+						/** Call the websys router to load url from node.href! */
+						Router.change_to_url(node.href);
+					}
+					
+					/** Regardless of the above operation(s), always flip the state back to null (reset) */
+					Graph.state.node.hovering = null;
+				}
 			}
 
 			/**
@@ -376,20 +447,25 @@ export class LPU {
 			if (event("PANNING") === true) {
 
 				/** here we handle panning the canvas */
-				Graph.canvas.element.style.cursor = "grab";
+				// Graph.canvas.element.style.cursor = "grab";
+				
 				/** the event returns the raw x, y pointer values */
-				const xy = event("POINTERXY");
+				const [x, y] = event("POINTERXY");
+				
 				/** here we store the camera translation value. essentially, this is the value we iterate so the pan is using this as an anchor point */
 				const cpan = Graph.camera.translation;
+				
 				/** here we calculate correct values */
-				const pan = xy.map(pixel => (pixel - 150));
-				/** here we set the value */
-				Graph.camera.pan(pan);
+				const pan = [x, y].map(pixel => (pixel));
+				
+				/** @todo disabled until cartesian-axis implementation */
+				// Graph.camera.pan(pan);
 
 			} else if (event("PANNING") === false) {
 
 				/** gracefully exit the panning branch */
-				Graph.canvas.element.style.cursor = "initial";
+				/** @todo handling the cursor actually requires a state otherwise this silently overrides any previous style settings!! */
+				// Graph.canvas.element.style.cursor = "initial";
 
 			}
 
@@ -400,25 +476,27 @@ export class LPU {
 				 * @todo should the LPU be allowed to change event flags?
 				 * @description here the LPU flips the event flag to "false" becausae the event is instant and can't process a flip-flop latch internally.
 				 */
-				Graph.events.FLAG("ZOOMING", false);
-				/**
-				 * applying camera transformations
-				 */
-				Graph.camera.zoom(event("ZOOMDELTA"));
+				Graph.events.flag("ZOOMING", false);
+				
+				/** @todo disabled until cartesian-axis implementation */
+				// Graph.camera.zoom(event("ZOOMDELTA"));
 
 			}
 		}
 	}
 }
 
-/**
- * @todo finding a sustainable event model for actual operations of each event. "branching"
- */
-class NodeEvent
-{
+
+
+
+/** @todo class data-model architecture */
+class NodeEvent {
 
 }
-class CameraEvent
-{
+class CameraEvent {
 
 }
+function evt_node_hover(){}
+function evt_node_click(){}
+function evt_camera_pan(){}
+function evt_camera__zm(){}

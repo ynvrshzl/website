@@ -11,15 +11,15 @@ export default {
         /** property */
         align: "center",
         /** property */
-        font: `8px ${getComputedStyle(document.body).getPropertyValue("--font-family-base").trim()}`,
+        font: `24px ${getComputedStyle(document.body).getPropertyValue("--font-family-base").trim()}`,
         /** property */
         color: getComputedStyle(document.body).getPropertyValue("--color-text").trim(),
         /** the calculated offset of the text, from the center of the node */
-        offset: 10
+        offset: 24
     },
     /** exposed program parameters for nodes */
     nodes: {
-        scale: 3,
+        scale: 10,
         color: getComputedStyle(document.body).getPropertyValue("--color-text").trim(),
         accent: getComputedStyle(document.body).getPropertyValue("--color-accent").trim()
     },

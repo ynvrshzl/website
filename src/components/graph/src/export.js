@@ -8,7 +8,6 @@ import { Events, Server } from "./system.js";
  * @version 6.0.0
  * @link for documentation see... [README](./graph/README)
  */
-
 export class Main {
 	/**
 	 * @abstract the network graph acts as an interface from -> the user-defined container -> to the network graph -> tells the canvas where it will be attached ->
@@ -70,6 +69,7 @@ export class Main {
 		this.server = new Server();
 		this.server.sync(this);
 		this.server.init();
+
 	}
 	/**
 	 * @abstract this is the main api of the network graph.
@@ -77,6 +77,12 @@ export class Main {
 	 * @summary this is most useful for synchronizing the graph with another system event, such as in the article rendering event.
 	 */
 	refresh() {
+		
+		/** Creating stateful memory for every refresh cycle. @todo should state be completely wiped each refresh, or simply instantiated once per graph cycle? */
+		const state = new Data.State();
+		state.sync(this);
+		this.state = state;
+
 		/** Every Network Graph refresh, the mode responsible for the data visualization, should also refresh. that is why we refresh the mode, rather than initializing it once. Becuase...? essentially, the mode is the API entry-point of the network graph.  */
 		const mode = new Data.Mode(this.mode);
 		mode.sync(this);
@@ -89,5 +95,7 @@ export class Main {
 
 		/** Refresh the server after the Mode processes data */
 		this.server.refresh();
+
+
 	}
 }
