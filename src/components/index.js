@@ -6,7 +6,7 @@
  * @imoprtant the 'artcle' component is the bottom-most, and is loaded last on this stack. becuase all components on the site rely on it's event 'article-rendered' to emit
  */
 const components = [
-    "boot-screen",
+    // "boot-screen",
     "tooltips",
     "page-preview",
     "sidebar",

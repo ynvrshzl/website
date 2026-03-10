@@ -11,7 +11,7 @@ export default {
         /** property */
         align: "center",
         /** property */
-        font: `24px ${getComputedStyle(document.body).getPropertyValue("--font-family-base").trim()}`,
+        font: `12px ${getComputedStyle(document.body).getPropertyValue("--font-family-base").trim()}`,
         /** property */
         color: getComputedStyle(document.body).getPropertyValue("--color-text").trim(),
         /** the calculated offset of the text, from the center of the node */
@@ -19,7 +19,7 @@ export default {
     },
     /** exposed program parameters for nodes */
     nodes: {
-        scale: 10,
+        scale: 7,
         color: getComputedStyle(document.body).getPropertyValue("--color-text").trim(),
         accent: getComputedStyle(document.body).getPropertyValue("--color-accent").trim()
     },

@@ -393,8 +393,6 @@ export class LPU {
 				/** handle if the current node, in the loop, is being hovered */
 				if (dist2 <= r2){
 
-					console.log("Node is hovered:", node);
-
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
 					
@@ -402,42 +400,30 @@ export class LPU {
 
 			});
 
-			/** @todo if there is a node being hovered, we handle that externally here */
-			if (Graph.state.node.hovering !== null){
-				console.log("Node is being hovered...");
-				
-				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
-				Graph.canvas.element.style.cursor = "pointer";
-								
-				/** @todo how do we handle when a node is no longer being hovered? */
-				Graph.state.node.hovering = null;
-				
-				
-			}
-			
-			/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
-			if (Graph.state.node.hovering === null){
-				console.log("No hover node");
-				
-				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
-				Graph.canvas.element.style.cursor = "initial";
-			}
 
-			/** at this branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
+			/** @todo the click event logic has to happen above node state flipping, becuase the below will reset the node state to null, and this click behavior has to catch it beforehand. This branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
 			if (event("CLICKING") === true) {
-
-				/** 
-				 * @todo This event should only exec at pointer down?
+				
+				/**
+				 * @todo should the LPU be allowed to change event flags?
+				 * @description here the LPU flips the event flag to "false" becausae the event is instant and can't process a flip-flop latch internally.
 				 */
+				Graph.events.flag("CLICKING", false);
+
+				/** The actual click event logic, which simply loads the websys-router api to the node.href */
 				if (Graph.state.node.hovering !== null){
 					
 					/** The node that is currently being hovered, is stored in a previous operations (hover event handler) */
 					const node = Graph.state.node.hovering;
+
+					console.log("Node href: ", node.href);
 					
 					/** Only change the window URL if the node contains a valid 'href' url. */
 					if (node.href !== null || node.href !== ""){
+
 						/** Call the websys router to load url from node.href! */
 						Router.change_to_url(node.href);
+						
 					}
 					
 					/** Regardless of the above operation(s), always flip the state back to null (reset) */
@@ -445,6 +431,24 @@ export class LPU {
 				}
 			}
 
+			/** @todo if there is a node being hovered, we handle that externally here */
+			if (Graph.state.node.hovering !== null){
+				
+				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
+				Graph.canvas.element.style.cursor = "pointer";
+								
+				/** @todo how do we handle when a node is no longer being hovered? */
+				Graph.state.node.hovering = null;
+				console.log("Node is not null");
+				
+			/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
+			} else if (Graph.state.node.hovering === null){
+				console.log("Node is null");
+				
+				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
+				Graph.canvas.element.style.cursor = "initial";
+			}
+			
 			/**
 			 * @todo this requires a translation axis system!
 			 * @description if the user is panning over the canvas with the middle-mouse button
