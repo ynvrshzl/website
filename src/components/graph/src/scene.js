@@ -176,7 +176,7 @@ export default class {
             
             const { x, y } = { x: node.x, y: node.y };
             
-            /** The conditional color of the text  */
+            /** conditional color...@todo it appears that this layer is only processing {x, y} not the entire node structure...  */
             const color = node.color ?? api.nodes.color;
             
             Draw.swap_fill_color(color);

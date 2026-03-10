@@ -365,9 +365,10 @@ export class LPU {
 
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
 		if (event("HOVERING") === true) {
-
-			/** If hovering over the graph, we can process node hovering first  */
-			const { nodes } = Graph.nodes;
+            
+            const { nodes } = Graph.nodes;
+			
+			const node_event_processor = new Node_evtpr();
 
 			/** Processing each "node" in Graph memory */
 			nodes.forEach((node) => {
@@ -395,7 +396,9 @@ export class LPU {
 
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
-					
+                    const hovered_node = nodes.find(n => n.id === node.id);
+                    hovered_node.color = "red";
+                    
 				}
 
 			});
@@ -494,18 +497,32 @@ export class LPU {
 		}
 	}
 }
-
-
-
-
-/** @todo class data-model architecture */
-class NodeEvent {
+/**
+ * This entity processess event operations, of the \*node 
+ */
+class Node_evtpr {
+	constructor(){}
+	process_loop(){}
+	on_hover_start(){}
+	on_hover_end(){}
+	on_click_start(){}
+	on_click_end(){}
+}
+class EventProcess {
+    constructor(){}
+    on_start(){}
+    on_end(){}
+}
+class Canvas_evtpr extends EventProcess {
 
 }
-class CameraEvent {
-
+/**
+ * This entity processess event operations, of the \*camera 
+ */
+class Camera_event extends EventProcess {
+	on_pan_start(){}
+	on_pan_end(){}
+	on_zoom_start(){}
+	on_zoom_end(){}
+	while_panning(){}
 }
-function evt_node_hover(){}
-function evt_node_click(){}
-function evt_camera_pan(){}
-function evt_camera__zm(){}
