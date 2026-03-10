@@ -393,9 +393,6 @@ export class LPU {
 				/** handle if the current node, in the loop, is being hovered */
 				if (dist2 <= r2){
 
-					/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
-					Graph.canvas.element.style.cursor = "pointer";
-
 					console.log("Node is hovered:", node);
 
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
@@ -407,15 +404,23 @@ export class LPU {
 
 			/** @todo if there is a node being hovered, we handle that externally here */
 			if (Graph.state.node.hovering !== null){
+				console.log("Node is being hovered...");
+				
+				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
+				Graph.canvas.element.style.cursor = "pointer";
 								
 				/** @todo how do we handle when a node is no longer being hovered? */
 				Graph.state.node.hovering = null;
 				
+				
 			}
-
+			
 			/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
 			if (Graph.state.node.hovering === null){
+				console.log("No hover node");
 				
+				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
+				Graph.canvas.element.style.cursor = "initial";
 			}
 
 			/** at this branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
