@@ -396,10 +396,8 @@ export class LPU {
 
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
-                    /** @todo abstarct implementation sample of how conditional colors could work */
-                    const hovered_node = nodes.find(n => n.id === node.id);
-                    hovered_node.color = "red";
-                    
+
+					
 				}
 
 			});
