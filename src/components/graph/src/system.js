@@ -338,37 +338,30 @@ export class LPU {
 			console.error(error.message);
 		}
 	}
-	/**
-	 * @todo branch? really? comeon guys! give this a proper programming model 
-	 * @todo each state machine branch should have it's own dedicated method, becuase if/else branches get very messy.
-	 */
+	/** @todo this operation will probably merge with .interpret() */
 	branch() {
 		
-		/** 
-		 * @description These are simply local variables so we don't have to specity "this" at every call.  
-		*/
-		const [ 
-
-			/** Alias for this.access() */
-			event, 
-
-			/** Alias for this.graph */
-			Graph 
-
-		] = [ 
-			/** Internal operation alias */
-			this.access.bind(this), 
-			
-			/** Internal memory alias */
-			this.graph
-		];
+		/** Local variables: These are simply local variables so we don't have to specity "this" at every call.  */
+		const [ Event, Graph, { nodes } ] = [ this.access.bind(this), this.graph, this.graph.nodes ];
+		
+		/** testing branch event architecture without if/else */
+		const branches = [
+			{
+				name: "hovering",
+				description: "The mouse hovering over the canvas event, is the main branch, for which all other user-interaction event branches will process.",
+				condition: (event) => event === true,
+				operations: [],
+			},
+			{
+				name: "main",
+				signal: () => { if (Event("HOVERING") === true) return true; },
+				operations: [],
+			},		
+		]
 
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
-		if (event("HOVERING") === true) {
+		if (Event("HOVERING") === true) {
             
-            const { nodes } = Graph.nodes;
-			
-			const node_event_processor = new Node_evtpr();
 
 			/** Processing each "node" in Graph memory */
 			nodes.forEach((node) => {
@@ -380,7 +373,7 @@ export class LPU {
 				const radius = api.nodes.scale;
 				
 				/** Pointer coordinate data 'x' + 'y' */
-				const [ptrx, ptry] = event("POINTERXY");
+				const [ptrx, ptry] = Event("POINTERXY");
 
 				/** Distance between Pointer and Node coordinate values. E.g. if ptrx = 25, and 'x' = 50, the distance between is 25. This number should decrease the closer the pointer arrives to the node. */
 				const [dx, dy] = [ptrx - x, ptry - y];
@@ -396,7 +389,6 @@ export class LPU {
 
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
-
 					
 				}
 
@@ -404,7 +396,7 @@ export class LPU {
 
 
 			/** @todo the click event logic has to happen above node state flipping, becuase the below will reset the node state to null, and this click behavior has to catch it beforehand. This branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
-			if (event("CLICKING") === true) {
+			if (Event("CLICKING") === true) {
 				
 				/**
 				 * @todo should the LPU be allowed to change event flags?
@@ -455,13 +447,13 @@ export class LPU {
 			 * @todo this requires a translation axis system!
 			 * @description if the user is panning over the canvas with the middle-mouse button
 			 */
-			if (event("PANNING") === true) {
+			if (Event("PANNING") === true) {
 
 				/** here we handle panning the canvas */
 				// Graph.canvas.element.style.cursor = "grab";
 				
 				/** the event returns the raw x, y pointer values */
-				const [x, y] = event("POINTERXY");
+				const [x, y] = Event("POINTERXY");
 				
 				/** here we store the camera translation value. essentially, this is the value we iterate so the pan is using this as an anchor point */
 				const cpan = Graph.camera.translation;
@@ -472,7 +464,7 @@ export class LPU {
 				/** @todo disabled until cartesian-axis implementation */
 				// Graph.camera.pan(pan);
 
-			} else if (event("PANNING") === false) {
+			} else if (Event("PANNING") === false) {
 
 				/** gracefully exit the panning branch */
 				/** @todo handling the cursor actually requires a state otherwise this silently overrides any previous style settings!! */
@@ -481,7 +473,7 @@ export class LPU {
 			}
 
 			/** only if hovering is true. otherwise, the zoom event gets misfired */
-			if (event("ZOOMING") === true) {
+			if (Event("ZOOMING") === true) {
 
 				/**
 				 * @todo should the LPU be allowed to change event flags?
@@ -496,32 +488,4 @@ export class LPU {
 		}
 	}
 }
-/**
- * This entity processess event operations, of the \*node 
- */
-class Node_evtpr {
-	constructor(){}
-	process_loop(){}
-	on_hover_start(){}
-	on_hover_end(){}
-	on_click_start(){}
-	on_click_end(){}
-}
-class EventProcess {
-    constructor(){}
-    on_start(){}
-    on_end(){}
-}
-class Canvas_evtpr extends EventProcess {
 
-}
-/**
- * This entity processess event operations, of the \*camera 
- */
-class Camera_event extends EventProcess {
-	on_pan_start(){}
-	on_pan_end(){}
-	on_zoom_start(){}
-	on_zoom_end(){}
-	while_panning(){}
-}
