@@ -55,7 +55,7 @@ export class Main {
 		 * @abstract we synchronize a and b. a: the main graph lifecycle function, b: the main websystem lifecycle
 		 */
 		this.events = new Events();
-		this.events.canvas = this.canvas;
+		this.events.sync(this);
 		this.events.hook(this.refresh.bind(this));
 		this.events.init();
 

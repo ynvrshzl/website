@@ -1,0 +1,9 @@
+2026.03.12 Changelog (developer-activity-tree)
+
+11:00
+- moved lpu.access() to events.access()
+- how do we access events.access() from lpu?
+- we can store the events class in (gi) graph memory at main.init() and access the (gi) graph instance from lpu
+
+14.40
+- added changes to export.js/main.init(), and canvas is no longer stored in Events, but accessed via graph. Which is structurally cohesive with the rest of the system.

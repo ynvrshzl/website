@@ -11,7 +11,7 @@
     "debug": "which node && node -v",
     "sass:compile": "npx sass scss/index.scss:style.min.css --style=compressed --quiet",
     "sass:watch": "npx sass scss/index.scss:style.min.css --style=compressed --watch --quiet",
-    "serve": "npx live-server --quiet --no-browser",
+    "serve": "npx live-server --no-browser",
     "readme": "code \"README.md\"",
     "database:start": "node ./database/main.js",
     "start": "npm run serve & npm run sass:watch & npm run database:start"
