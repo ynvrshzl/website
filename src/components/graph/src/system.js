@@ -1,5 +1,5 @@
 import api from "./api.js";
-import {main as Router} from "@sys/router.js";
+import { main as Router } from "@sys/router.js";
 import * as Log from "@mocha/log.js"
 
 /**
@@ -105,30 +105,30 @@ export class Events {
 		/** This memory block is how events store data, and communicate with the external world.  */
 		this.stack = {
 
-		/** Source definition await... */
-		"POINTERXY": Array(0, 0),
+			/** Source definition await... */
+			"POINTERXY": Array(0, 0),
 
-		/** Source definition await... */
-		"CLICKING": Boolean(false),
+			/** Source definition await... */
+			"CLICKING": Boolean(false),
 
-		/** Source definition await... */
-		"PANNING": Boolean(false),
+			/** Source definition await... */
+			"PANNING": Boolean(false),
 
-		/** Source definition await...*/
-		"CTXMENU": Boolean(false),
+			/** Source definition await...*/
+			"CTXMENU": Boolean(false),
 
-		/** Source definition await... */
-		"DRAGGING": Boolean(false),
+			/** Source definition await... */
+			"DRAGGING": Boolean(false),
 
-		/** This memory block contains a boolean state of the user hovering over the graph window. */
-		"HOVERING": Boolean(false),
+			/** This memory block contains a boolean state of the user hovering over the graph window. */
+			"HOVERING": Boolean(false),
 
-		/** This memory block contains the boolean state of the user zooming event.  */
-		"ZOOMING": Boolean(false),
+			/** This memory block contains the boolean state of the user zooming event.  */
+			"ZOOMING": Boolean(false),
 
-		/** This event stack data block contains the direction as string ("in" or "out") of the zoom event. */
-		"ZOOMDELTA": String,
-	}
+			/** This event stack data block contains the direction as string ("in" or "out") of the zoom event. */
+			"ZOOMDELTA": String,
+		}
 
 		/**
 		 * @todo this should probably be made clearer and actuall implement flags somehow?
@@ -172,7 +172,7 @@ export class Events {
 		];
 	}
 	/** Syrnchonize/mount the events module to a main Graph instance. */
-	sync(instance){
+	sync(instance) {
 		this.graph = instance;
 	}
 	/**
@@ -186,10 +186,10 @@ export class Events {
 	 * @param {String} flag is the string value of the event signal in stack memory, for which to access.
 	 */
 	read(flag) {
-		
+
 		/** the events stack is how events share their data with the external world, so we access that here. */
 		const event_stack = this.stack;
-		
+
 		/** error-checking is verbose and hard to read, but this is for the operator to diagnose issues, especially in a very delicate data-transfer operation. */
 		try {
 
@@ -199,7 +199,7 @@ export class Events {
 				/** throw new error to assist the operator */
 				throw new Error("Panic! The events stack does not contain the provided flag string: ", flag)
 
-			/** otherwise, it is safe to access values */
+				/** otherwise, it is safe to access values */
 			} else {
 
 				/** simply returns the flag object from stack memory */
@@ -344,52 +344,48 @@ export class LPU {
 	interpret() {
 
 	}
-	
+
 	/** @todo this operation will probably merge with .interpret() */
 	branch() {
-		
+
 		/** Local variables: These are simply local variables so we don't have to specity "this" at every call.  */
 		const { nodes } = this.graph.nodes;
-		
+
 		/** Graph instance reference pointer */
 		const Graph = this.graph;
-		
+
 		/** This is crazy lol, but lemme explain. For some reason, the Events module loses it's "this" context when we call it from inside this LPU class. So we're essentially re-assigning the "this" context, to the graph event class reference, stored in the main graph class. Super-hacky, but works lol. */
 		const SIGNAL = this.graph.events.read.bind(this.graph.events);
-		
+
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
 		if (SIGNAL("HOVERING") === true) {
-            
+
 			/** Processing each "node" in Graph memory */
 			nodes.forEach((node) => {
 
 				/** Extract 'x' + 'y' position coordinates from node data */
 				const { x, y } = node;
-				
+
 				/** @todo Radius should probably be packaged with each node... */
 				const radius = api.nodes.scale;
-				
+
 				/** Pointer coordinate data 'x' + 'y' */
 				const [ptrx, ptry] = SIGNAL("POINTERXY");
 
 				/** Distance between Pointer and Node coordinate values. E.g. if ptrx = 25, and 'x' = 50, the distance between is 25. This number should decrease the closer the pointer arrives to the node. */
 				const [dx, dy] = [ptrx - x, ptry - y];
-				
+
 				/** Becuase the above values would only work for the exact centre of the node, we apply a squareroot function using bare mathematics, to derive the summation diameter. */
 				const dist2 = [dx * dx + dy * dy]
-				
+
 				/** Square the radius. e.g. 10 * 10 = 100 */
 				const r2 = radius * radius
 
 				/** handle if the current node, in the loop, is being hovered */
-				if (dist2 <= r2){
+				if (dist2 <= r2) {
 
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
-					
-					/** @todo abstarct implementation sample of how conditional colors could work */
-                    const hovered_node = nodes.find(n => n.id === node.id);
-                    hovered_node.color = "blue";
 
 				}
 
@@ -398,7 +394,7 @@ export class LPU {
 
 			/** @todo the click event logic has to happen above node state flipping, becuase the below will reset the node state to null, and this click behavior has to catch it beforehand. This branch, if the user is hovering inside the graph, we can safely executre these inner branches at level: 2 */
 			if (SIGNAL("CLICKING") === true) {
-				
+
 				/**
 				 * @todo should the LPU be allowed to change event flags?
 				 * @description here the LPU flips the event flag to "false" becausae the event is instant and can't process a flip-flop latch internally.
@@ -406,48 +402,53 @@ export class LPU {
 				Graph.events.flag("CLICKING", false);
 
 				/** The actual click event logic, which simply loads the websys-router api to the node.href */
-				if (Graph.state.node.hovering !== null){
-					
+				if (Graph.state.node.hovering !== null) {
+
 					/** The node that is currently being hovered, is stored in a previous operations (hover event handler) */
 					const node = Graph.state.node.hovering;
 
 					console.log("Node href: ", node.href);
-					
+
 					/** Only change the window URL if the node contains a valid 'href' url. */
-					if (node.href !== null || node.href !== ""){
+					if (node.href !== null || node.href !== "") {
 
 						/** Call the websys router to load url from node.href! */
 						Router.change_to_url(node.href);
-						
+
 					}
-					
+
 					/** Regardless of the above operation(s), always flip the state back to null (reset) */
 					Graph.state.node.hovering = null;
 				}
 			}
 
 			/** @todo if there is a node being hovered, we handle that externally here */
-			if (Graph.state.node.hovering !== null){
-				
+			if (Graph.state.node.hovering !== null && Graph.state.node.hovering !== undefined ) {
+
 				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
 				Graph.canvas.element.style.cursor = "pointer";
-								
+
 				/** System debugging console */
 				console.debug(`Graph-state-memory: node.hovering is ${Log.cols.green(Graph.state.node.hovering)}`);
-				
+
+				/** @todo abstarct implementation sample of how conditional colors could work */
+				const hovered_node = nodes.find(n => n === Graph.state.node.hovering);
+				hovered_node.color = api.nodes.accent;
+
 				/** @todo how do we handle when a node is no longer being hovered? */
 				Graph.state.node.hovering = null;
-				
-			/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
-			} else if (Graph.state.node.hovering === null){
-				
+
+				/** @todo this should probably be handled separately... beuase it's not only hovering the cnavas, but over node stateful hover memory */
+			} else if (Graph.state.node.hovering === null) {
+
 				/** System debugging console */
 				console.debug(`Graph-state-memory: node.hovering is ${Log.cols.red(Graph.state.node.hovering)}`);
-				
+
 				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
 				Graph.canvas.element.style.cursor = "initial";
+				
 			}
-			
+
 			/**
 			 * @todo this requires a translation axis system!
 			 * @description if the user is panning over the canvas with the middle-mouse button
@@ -456,16 +457,16 @@ export class LPU {
 
 				/** here we handle panning the canvas */
 				// Graph.canvas.element.style.cursor = "grab";
-				
+
 				/** the event returns the raw x, y pointer values */
 				const [x, y] = SIGNAL("POINTERXY");
-				
+
 				/** here we store the camera translation value. essentially, this is the value we iterate so the pan is using this as an anchor point */
 				const cpan = Graph.camera.translation;
-				
+
 				/** here we calculate correct values */
 				const pan = [x, y].map(pixel => (pixel));
-				
+
 				/** @todo disabled until cartesian-axis implementation */
 				// Graph.camera.pan(pan);
 
@@ -485,7 +486,7 @@ export class LPU {
 				 * @description here the LPU flips the event flag to "false" becausae the event is instant and can't process a flip-flop latch internally.
 				 */
 				Graph.events.flag("ZOOMING", false);
-				
+
 				/** @todo disabled until cartesian-axis implementation */
 				// Graph.camera.zoom(event("ZOOMDELTA"));
 
