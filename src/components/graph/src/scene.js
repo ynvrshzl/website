@@ -113,9 +113,12 @@ export default class {
         /** Processing graphical nodes (alias: dots, circles, bubbles) */
         this.layers.at(2).buffer(() => {
 
+            /** Store buffer for node dots */
             const buffer = [];
 
+            /** Loop through each dot in data */
             for (const dot of data) {
+
                 buffer.push({
 
                     /** @property using the node["y"] property, we extract it into a semantic data-layer */
@@ -124,10 +127,8 @@ export default class {
                     /** @property using the node["x"] property, we extract it into a semantic data-layer */
                     y: dot.y,
 
-                    /** 
-                     * @done should we handle the logical processing of color here? becusae externally, the only way a specific node can be change, is via the events system. which essentially finds the `id` of the event-related-node, and changes it's data. this simply reads from it. 
-                     * color: ?
-                    */
+                    /** @property using the node["color"] property, we extract it conditionally into a data-layer */
+                   color: dot.color ?? api.nodes.color,
 
                 });
             }
@@ -177,7 +178,7 @@ export default class {
             const { x, y } = { x: node.x, y: node.y };
             
             /** conditional color...@todo it appears that this layer is only processing {x, y} not the entire node structure...  */
-            const color = node.color ?? api.nodes.color;
+            const color = node.color;
             
             Draw.swap_fill_color(color);
             

@@ -350,9 +350,12 @@ export class LPU {
 		
 		/** Local variables: These are simply local variables so we don't have to specity "this" at every call.  */
 		const { nodes } = this.graph.nodes;
+		
+		/** Graph instance reference pointer */
 		const Graph = this.graph;
-		const SIGNAL = this.graph.events.read.bind(this.graph.events);
+		
 		/** This is crazy lol, but lemme explain. For some reason, the Events module loses it's "this" context when we call it from inside this LPU class. So we're essentially re-assigning the "this" context, to the graph event class reference, stored in the main graph class. Super-hacky, but works lol. */
+		const SIGNAL = this.graph.events.read.bind(this.graph.events);
 		
 		/** @description here we translate the events states, inside the continously running server. we assume events are instant, and so, flip-flop latches cannot work in a single event. a flip-flop flag like "zooming = true" has to share state-data across (2) events.  */
 		if (SIGNAL("HOVERING") === true) {
@@ -384,6 +387,10 @@ export class LPU {
 					/** Here, we store the currently hovered node, in state memory. This way, any external entity can access memory dynamically, without needing to call specific operationg within this event. */
 					Graph.state.node.hovering = node;
 					
+					/** @todo abstarct implementation sample of how conditional colors could work */
+                    const hovered_node = nodes.find(n => n.id === node.id);
+                    hovered_node.color = "blue";
+
 				}
 
 			});
