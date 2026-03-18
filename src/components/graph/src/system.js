@@ -423,7 +423,7 @@ export class LPU {
 			}
 
 			/** @todo if there is a node being hovered, we handle that externally here */
-			if (Graph.state.node.hovering !== null && Graph.state.node.hovering !== undefined ) {
+			if (Graph.state.node.hovering !== null) {
 
 				/** Accessibility: change the mouse cursor to contextual link pointer. @todo this requires cleaner event architecture. */
 				Graph.canvas.element.style.cursor = "pointer";
@@ -431,9 +431,11 @@ export class LPU {
 				/** System debugging console */
 				console.debug(`Graph-state-memory: node.hovering is ${Log.cols.green(Graph.state.node.hovering)}`);
 
-				/** @todo abstarct implementation sample of how conditional colors could work */
-				const hovered_node = nodes.find(n => n === Graph.state.node.hovering);
-				hovered_node.color = api.nodes.accent;
+				if (Graph.state.node.hovering !== undefined){
+					/** @todo abstarct implementation sample of how conditional colors could work */
+					const hovered_node = nodes.find(n => n === Graph.state.node.hovering);
+					hovered_node.color = api.nodes.accent;
+				}
 
 				/** @todo how do we handle when a node is no longer being hovered? */
 				Graph.state.node.hovering = null;
