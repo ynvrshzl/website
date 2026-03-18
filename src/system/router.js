@@ -22,11 +22,18 @@ export const main = {
         window.addEventListener("auxclick", resolvers.open_in_new_tab);
     },
     /** 
-     * This operation is used for safely changing the URL hash of the window 
+     * @description This operation is used for safely changing the URL hash of the window 
      * @param {String} url Any valid string url. E.g. "path/to/file"
     */
     change_to_url(url){
-        window.location.hash = "/" + url.trim().split("/").slice(3).join("/").replace(".md", "");
+        
+        /** If the input url string, is a website url, then we only extract the hash from the string. */
+        if (url.includes("http")){
+            window.location.hash = "/" + url.trim().split("/").slice(3).join("/").replace(".md", "");
+        /** Otherwise, it's safe to assume all other urls will be treated as static /#/ hash urls */
+        } else {
+            window.location.hash = "/" + url.trim().replace(".md", "");
+        }
     },
     
     /** sample utility for resolving conflicting link paths like in obsidian */
